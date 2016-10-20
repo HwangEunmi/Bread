@@ -22,18 +22,6 @@
         android:id="@+id/textView2" />
 
     <Button
-        android:text="login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="13dp"
-        android:layout_marginEnd="13dp"
-        android:layout_marginTop="118dp"
-        android:id="@+id/btn_login" />
-
-    <Button
         android:text="membership"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,4 +32,27 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="119dp"
         android:id="@+id/btn_membership" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Name"
+        android:ems="10"
+        android:id="@+id/editText"
+        android:layout_alignTop="@+id/btn_login"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/btn_login"
+        android:layout_toStartOf="@+id/btn_login" />
+
+    <Button
+        android:text="login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="113dp"
+        android:id="@+id/btn_login"
+        android:layout_below="@+id/textView2"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

@@ -1,6 +1,60 @@
 <resources>
     <string name="app_name">Bread</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- toolbar -->
+    <string name="title_membership">Membership </string>
+    <string name="title_boardsearch">Search Board </string>
+    <string name="title_boardwrite">Write Board </string>
+    <string name="title_update_profile">Update My Page</string>
+
+    <!-- toast | snackbar -->
+    <string name="toast_id">You have to enter your id </string>
+    <string name="toast_password">You have to enter your password </string>
+    <string name="toast_overlap_id">You have to enter other id </string>
+    <string name="toast_overlap_name">You have to enter other name </string>
+    <string name="toast_error_password">You have to enter more </string>
+    <string name="toast_logout">Are you really want to logout? </string>
+    <string name="toast_leave">Are you really want to leave? </string>
+
+    <!-- activity_login -->
+    <string name="button_login">Login </string>
+    <string name="button_membership">Membership </string>
+    <string name="hint_id">Please enter your id </string>
+    <string name="hint_password">Please enter your password </string>
+
+    <!-- activity_membership -->
+    <string name="button_set">Set </string>
+    <string name="button_cancel">Cancel</string>
+    <string name="hint_two_password">Please enter your password (6 more) </string>
+    <string name="view_profile">Profile Photo </string>
+    <string name="check_overlap_id"> Check ID</string>
+    <string name="check_overlap_name">Check Name</string>
+
+    <!-- activity_boardsearch -->
+    <string name="spinner_writer">Writer </string>
+    <string name="spinner_date">Date </string>
+    <string name="hint_search">Please enter.... </string>
+
+    <!-- activity_boardwrite -->
+    <string name="alarm_boardwrite">You have to write to here to three things </string>
+    <string name="image_alarm">Please register your image </string>
+
+    <!-- activity_boarddetail -->
+    <string name="spinner_update">Update </string>
+    <string name="spinner_delete">Delete </string>
+    <string name="hint_comment">Please enter your comment here </string>
+    <string name="toast_delete">Are you really want to delete? </string>
+
+    <!-- fragment_mypage -->
+    <string name="update_my_info">Update My Information </string>
+    <string name="view_update_my_info">I want to update my information right now </string>
+    <string name="logout">Logout</string>
+    <string name="leave">Leave</string>
+
+    <!-- activity_updateprofile -->
+    <string name="view_update_password">Update Password </string>
+    <string name="view_present_password">Your present password </string>
+    <string name="view_now_password">Your now password </string>
+    <string name="view_again_password">Again please </string>
+
 </resources>

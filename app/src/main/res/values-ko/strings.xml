@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">빵</string>
+
+    <!-- toolbar -->
+    <string name="title_membership">회원가입 </string>
+    <string name="title_boardsearch">게시판 검색 화면 </string>
+    <string name="title_boardwrite">게시판 작성 화면 </string>
+    <string name="title_update_profile">마이 페이지 수정 </string>
+
+    <!-- toast | snackbar -->
+    <string name="toast_id">ID를 입력해주세요</string>
+    <string name="toast_password">비밀번호를 입력해주세요 </string>
+    <string name="toast_overlap_id">다른 아이디를 입력해주세요 </string>
+    <string name="toast_overlap_name">다른 이름을 입력해주세요 </string>
+    <string name="toast_error_password">비밀번호는 6자리 이상입니다 </string>
+    <string name="toast_logout">정말로 로그아웃을 원하십니까? </string>
+    <string name="toast_leave">정말로 탈퇴를 원하십니까? </string>
+
+    <!-- activity_login -->
+    <string name="button_login">로그인 </string>
+    <string name="button_membership">회원가입 </string>
+    <string name="hint_id">아이디를 입력해주세요 </string>
+    <string name="hint_password">비밀번호를 입력해주세요 </string>
+
+    <!-- activity_membership -->
+    <string name="button_set">등록하기 </string>
+    <string name="button_cancel">취소하기</string>
+    <string name="hint_two_password">재 입력해주세요 </string>
+    <string name="view_profile">프로필 사진 </string>
+    <string name="check_overlap_id">아이디 중복확인 </string>
+    <string name="check_overlap_name">이름 중복확인 </string>
+
+    <!-- activity_boardsearch -->
+    <string name="spinner_writer">작성자 </string>
+    <string name="spinner_date">날짜 </string>
+    <string name="hint_search">여기에 입력해주세요.... </string>
+
+    <!-- activity_boardwrite -->
+    <string name="alarm_boardwrite">3개만 등록해주세요 </string>
+    <string name="image_alarm">이미지를 등록해주세요 </string>
+
+    <!-- activity_boarddetail -->
+    <string name="spinner_update">수정하기 </string>
+    <string name="spinner_delete">삭제하기 </string>
+    <string name="hint_comment">댓글을 입력해주세요 </string>
+    <string name="toast_delete">정말로 삭제하시겠습니까? </string>
+
+    <!-- fragment_mypage -->
+    <string name="update_my_info">내 정보 수정하기 </string>
+    <string name="view_update_my_info">내 정보 수정 </string>
+    <string name="logout">로그아웃</string>
+    <string name="leave">탈퇴하기</string>
+
+    <!-- activity_updateprofile -->
+    <string name="view_update_password">비밀번호 수정 </string>
+    <string name="view_present_password">현재 비밀번호 </string>
+    <string name="view_now_password">사용할 비밀번호 </string>
+    <string name="view_again_password">재 입력해주세요 </string>
+
+</resources>
