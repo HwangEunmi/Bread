@@ -11,25 +11,17 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true">
+        android:layout_height="420dp">
 
         <RelativeLayout
             android:id="@+id/layout_one"
             android:layout_width="match_parent"
-            android:layout_height="420dp">
+            android:layout_height="wrap_content">
 
             <EditText
                 android:id="@+id/edit_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="21dp"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:text="아이디입력" />
@@ -39,9 +31,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/edit_name"
-                android:layout_marginEnd="13dp"
-                android:layout_marginRight="13dp"
-                android:layout_marginTop="19dp"
                 android:text="@string/check_overlap_id" />
 
             <TextView
@@ -56,10 +45,6 @@
                 android:id="@+id/edit_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentStart="true"
                 android:layout_below="@+id/text_overlap_id"
                 android:layout_marginTop="12dp"
                 android:ems="10"
@@ -83,12 +68,12 @@
                 android:id="@+id/edit_password_more"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:ems="10"
-                android:text="비밀번호 확인"
                 android:inputType="textPassword"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:text="비밀번호 확인" />
 
             <ImageView
                 android:id="@+id/image_profile"
@@ -99,9 +84,14 @@
                 android:layout_alignParentStart="true"
                 app:srcCompat="@mipmap/ic_launcher" />
 
-
+            <ImageView
+                android:id="@+id/image_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@mipmap/ic_launcher" />
         </RelativeLayout>
     </ScrollView>
 
     <include layout="@layout/view_membership_bottom"></include>
+
 </RelativeLayout>

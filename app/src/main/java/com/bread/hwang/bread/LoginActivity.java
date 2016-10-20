@@ -38,11 +38,13 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String userId = idText.getText().toString();
                 PropertyManager.getInstance().setUserId(userId);
             /*SharedPreference에 저장된 값을 가져와서 지금 입력된 값이랑 비교하기 (저거 set이 아니라 get으로 가져와서 비교해야 함) */
                 String userPass = passwordText.getText().toString();
                 PropertyManager.getInstance().setUserPassword(userPass);
+
                 if (userPass.toString().length() < 6) {
                     Toast.makeText(LoginActivity.this, "ssi", Toast.LENGTH_SHORT).show();
                 }

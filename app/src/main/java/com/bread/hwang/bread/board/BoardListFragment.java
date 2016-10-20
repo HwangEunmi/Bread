@@ -3,6 +3,7 @@ package com.bread.hwang.bread.board;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,26 +30,24 @@ public class BoardListFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_board_list, container, false);
 
+        FloatingActionButton fb = (FloatingActionButton) view.findViewById(R.id.floating);
+        fb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(getContext(), BoardDetailActivity.class);
+                startActivity(intent);
+            }
+        });
         Button search = (Button) view.findViewById(R.id.btn_search);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 intent = new Intent(getContext(), BoardSearchActivity.class);
 
-                startActivity(intent);
-            }
-        });
-
-        Button detail = (Button) view.findViewById(R.id.btn_detail);
-        detail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                intent = new Intent(getContext(), BoardDetailActivity.class);
                 startActivity(intent);
             }
         });
