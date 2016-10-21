@@ -4,4 +4,9 @@
         <item>Writer</item>
         <item>Date</item>
     </string-array>
+
+    <string-array name="detail">
+        <item>Update</item>
+        <item>Delete</item>
+    </string-array>
 </resources>

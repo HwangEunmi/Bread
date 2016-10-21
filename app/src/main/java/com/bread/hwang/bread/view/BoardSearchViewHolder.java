@@ -2,6 +2,7 @@ package com.bread.hwang.bread.view;
 
 import android.content.Context;
 import android.view.KeyEvent;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,13 +33,12 @@ public class BoardSearchViewHolder extends FrameLayout {
         content = (TextView) findViewById(R.id.text_content);
         date = (TextView) findViewById(R.id.text_date);
 
-        content.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        content.setOnClickListener(new OnClickListener() {
             @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+            public void onClick(View v) {
                 if (listener != null) {
                     listener.onContentClick(BoardSearchViewHolder.this, board);
                 }
-                return false;
             }
         });
     }

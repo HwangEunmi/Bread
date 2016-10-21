@@ -5,8 +5,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Toast;
 
+import com.bread.hwang.bread.MainActivity;
 import com.bread.hwang.bread.R;
+import com.bread.hwang.bread.adapter.BoardDetailReplyAdapter;
+import com.bread.hwang.bread.data.Reply;
+import com.bread.hwang.bread.data.User;
+import com.bread.hwang.bread.view.BoardDetailReplyViewHolder;
 
 public class BoardDetailActivity extends AppCompatActivity {
  /* 게시글 상세페이지 */
@@ -16,29 +23,46 @@ public class BoardDetailActivity extends AppCompatActivity {
     /* 댓글 등록API, 댓글 목록API, 댓글 수정API, 댓글 삭제API*/
 
     Intent intent;
+    ListView listView;
+    BoardDetailReplyAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board_detail);
 
-        Button back = (Button) findViewById(R.id.btn_back);
-        back.setOnClickListener(new View.OnClickListener() {
+        listView = (ListView) findViewById(R.id.listView);
+        mAdapter = new BoardDetailReplyAdapter();
+        listView.setAdapter(mAdapter);
+
+        mAdapter.setOnAdapterBoardReplyDeleteClickListener(new BoardDetailReplyAdapter.OnAdapterBoardReplyDeleteClickListener() {
             @Override
-            public void onClick(View v) {
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                finish();
+            public void onAdapterBoardReplyDeleteClick(BoardDetailReplyAdapter adapter, BoardDetailReplyViewHolder view, Reply reply) {
+                Toast.makeText(BoardDetailActivity.this, "삭제", Toast.LENGTH_SHORT).show();
             }
         });
 
-        Button update = (Button) findViewById(R.id.btn_update);
-        update.setOnClickListener(new View.OnClickListener() {
+        mAdapter.setOnAdapterBoardReplyUpdateClickListener(new BoardDetailReplyAdapter.OnAdapterBoardReplyUpdateClickListener() {
             @Override
-            public void onClick(View v) {
-                intent = new Intent(BoardDetailActivity.this, BoardWriteActivity.class);
-                startActivity(intent);
+            public void onAdapterBoardReplyUpdateClick(BoardDetailReplyAdapter adapter, BoardDetailReplyViewHolder view, Reply reply) {
+                Toast.makeText(BoardDetailActivity.this, "수정", Toast.LENGTH_SHORT).show();
             }
         });
 
+        mAdapter.clear();
+        initData();
+
+    }
+
+    private void initData() {
+        for (int i = 0; i < 20; i++) {
+            Reply reply = new Reply();
+            User user = new User();
+            reply.setContent(i + "bread!!");
+            reply.setRegDate("" + i);
+            user.setNickname(i + "Writer");
+            reply.setUserNumber(user);
+            mAdapter.add(reply);
+        }
     }
 }

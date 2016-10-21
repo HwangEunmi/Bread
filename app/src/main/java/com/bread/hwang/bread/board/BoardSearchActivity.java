@@ -36,7 +36,21 @@ public class BoardSearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board_search);
-        searchView = (SearchView)findViewById(R.id.searchView);
+
+        listView = (ListView) findViewById(R.id.listView);
+        mAdapter = new BoardSearchAdapter();
+        mAdapter.setOnAdapterContentClickListener(new BoardSearchAdapter.OnAdapterContentClickListener() {
+            @Override
+            public void onAdapterContentClick(BoardSearchAdapter adapter, BoardSearchViewHolder view, Board board) {
+                intent = new Intent(BoardSearchActivity.this, BoardDetailActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        listView.setAdapter(mAdapter);
+
+        searchView = (SearchView) findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -51,18 +65,6 @@ public class BoardSearchActivity extends AppCompatActivity {
                 return false;
             }
         });
-        listView = (ListView) findViewById(R.id.listView);
-        mAdapter = new BoardSearchAdapter();
-        mAdapter.setOnAdapterContentClickListener(new BoardSearchAdapter.OnAdapterContentClickListener() {
-            @Override
-            public void onAdapterContentClick(BoardSearchAdapter adapter, BoardSearchViewHolder view, Board board) {
-                intent = new Intent(BoardSearchActivity.this, BoardDetailActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        listView.setAdapter(mAdapter);
 
         spinner = (Spinner) findViewById(R.id.spinner);
         spinnerAdapter = new BoardSearchSpinnerAdapter();
