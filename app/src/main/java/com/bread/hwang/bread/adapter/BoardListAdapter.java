@@ -57,7 +57,7 @@ public class BoardListAdapter extends BaseAdapter implements BoardListViewHolder
         } else {
             view = (BoardListViewHolder) convertView;
         }
-        view.setBoard(items.get(position));
+        view.setBoardList(items.get(position));
 
         return view;
     }

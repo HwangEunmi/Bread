@@ -48,7 +48,7 @@ public class BoardListViewHolder extends FrameLayout {
         });
     }
 
-    public void setBoard(Board board) {
+    public void setBoardList(Board board) {
         this.board = board;
 
         Glide.with(profileImage.getContext())
