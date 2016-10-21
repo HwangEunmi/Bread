@@ -12,11 +12,20 @@ public class Board implements Serializable {
     private String regDate;
     private String updateDate;
     private User userNumber;
+    private int fileCount;
     private int replyCount;
     private int imageCount;
     private int audioCount;
     private int videoCount;
     private String imagePath;
+
+    public int getFileCount() {
+        return fileCount;
+    }
+
+    public void setFileCount(int audioCount, int imageCount, int videoCount) {
+        this.fileCount = audioCount + imageCount + videoCount;
+    }
 
     public int getNumber() {
         return number;
