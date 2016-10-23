@@ -1,9 +1,6 @@
 package com.bread.hwang.bread.view;
 
 import android.content.Context;
-import android.provider.ContactsContract;
-import android.renderscript.BaseObj;
-import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -32,7 +29,7 @@ public class BoardListViewHolder extends FrameLayout {
         boardImage = (ImageView) findViewById(R.id.image_board);
         profileImage = (ImageView) findViewById(R.id.image_profile);
         content = (TextView) findViewById(R.id.text_content);
-        userName = (TextView) findViewById(R.id.text_username);
+        userName = (TextView) findViewById(R.id.text_reply_username);
         commentCount = (TextView) findViewById(R.id.text_comment_count);
         fileCount = (TextView) findViewById(R.id.text_file_count);
         date = (TextView) findViewById(R.id.text_date);

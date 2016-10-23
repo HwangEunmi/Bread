@@ -1,7 +1,6 @@
 package com.bread.hwang.bread.view;
 
 import android.content.Context;
-import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -29,12 +28,13 @@ public class BoardDetailReplyViewHolder extends FrameLayout {
 
     private void init() {
         inflate(getContext(), R.layout.view_detail_reply, this);
-        profileImage = (ImageView) findViewById(R.id.image_profile);
-        userName = (TextView) findViewById(R.id.text_username);
+
+        profileImage = (ImageView) findViewById(R.id.image_reply_profile);
+        userName = (TextView) findViewById(R.id.text_reply_username);
         content = (TextView) findViewById(R.id.text_reply_content);
-        date = (TextView) findViewById(R.id.text_date);
-        updateButton = (ImageButton) findViewById(R.id.btn_update);
-        deleteButton = (ImageButton) findViewById(R.id.btn_delete);
+        date = (TextView) findViewById(R.id.text_reply_date);
+        updateButton = (ImageButton) findViewById(R.id.btn_reply_update);
+        deleteButton = (ImageButton) findViewById(R.id.btn_reply_delete);
 
         updateButton.setOnClickListener(new OnClickListener() {
             @Override

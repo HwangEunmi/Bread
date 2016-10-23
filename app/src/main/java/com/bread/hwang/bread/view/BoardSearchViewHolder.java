@@ -1,7 +1,6 @@
 package com.bread.hwang.bread.view;
 
 import android.content.Context;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -29,7 +28,7 @@ public class BoardSearchViewHolder extends FrameLayout {
     private void initData() {
         inflate(getContext(), R.layout.view_boardsearch, this);
         profileImage = (ImageView) findViewById(R.id.image_profile);
-        userName = (TextView) findViewById(R.id.text_username);
+        userName = (TextView) findViewById(R.id.text_reply_username);
         content = (TextView) findViewById(R.id.text_content);
         date = (TextView) findViewById(R.id.text_date);
 

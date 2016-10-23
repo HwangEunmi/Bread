@@ -3,12 +3,16 @@ package com.bread.hwang.bread.board;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.bread.hwang.bread.MainActivity;
 import com.bread.hwang.bread.R;
 import com.bread.hwang.bread.adapter.BoardDetailReplyAdapter;
 import com.bread.hwang.bread.data.Reply;
@@ -25,6 +29,7 @@ public class BoardDetailActivity extends AppCompatActivity {
     Intent intent;
     ListView listView;
     BoardDetailReplyAdapter mAdapter;
+    EditText replyEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +37,7 @@ public class BoardDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_board_detail);
 
         listView = (ListView) findViewById(R.id.listView);
+
         mAdapter = new BoardDetailReplyAdapter();
         listView.setAdapter(mAdapter);
 
@@ -49,9 +55,29 @@ public class BoardDetailActivity extends AppCompatActivity {
             }
         });
 
+        replyEdit = (EditText)findViewById(R.id.edit_comment);
+        Button replyButton = (Button)findViewById(R.id.btn_set);
+        replyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                int count;
+//                count = mAdapter.getCount() + 1;
+                String replyText = replyEdit.getText().toString();
+
+                Reply reply = new Reply();
+                User user = new User();
+                user.setNickname("마카롱");
+                user.setImagePath(""+R.drawable.default_bread);
+                reply.setUserNumber(user);
+                reply.setRegDate("2016.10.1");
+                reply.setContent(replyText);
+             //   mAdapter.clear();
+                mAdapter.add(reply);
+            }
+        });
+
         mAdapter.clear();
         initData();
-
     }
 
     private void initData() {
@@ -64,5 +90,24 @@ public class BoardDetailActivity extends AppCompatActivity {
             reply.setUserNumber(user);
             mAdapter.add(reply);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        /* 나중에 자기 게시글일때만 수정, 삭제 가능하게 */
+        getMenuInflater().inflate(R.menu.activity_board_detail, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.board_update) {
+            intent = new Intent(BoardDetailActivity.this, BoardWriteActivity.class);
+            startActivity(intent);
+        } else if (item.getItemId() == R.id.board_delete) {
+            /* 게시물 삭제 */
+            Toast.makeText(BoardDetailActivity.this, "삭제합니다", Toast.LENGTH_SHORT).show();
+        }
+        return true;
     }
 }

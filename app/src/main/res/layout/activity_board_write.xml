@@ -10,17 +10,49 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.bread.hwang.bread.board.BoardWriteActivity">
 
-    <Button
-        android:text="set"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="28dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginBottom="173dp"
-        android:id="@+id/btn_set" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <TextView
+            android:id="@+id/text_alarm"
+            android:textColor="@color/colorAccent"
+            android:textSize="15sp"
+            android:text="You have to write to here three things"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_marginLeft="50dp"
+            android:src="@drawable/default_bread"
+            android:layout_toRightOf="@+id/text_alarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_two"
+        android:layout_below="@+id/linear"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@drawable/default_bread"
+            android:id="@+id/image_user_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+
+            android:layout_toRightOf = "@+id/image_user_profile"
+            android:textSize="20sp"
+            android:text="bread"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|center"
+            android:id="@+id/text_username" />
+    </LinearLayout>
+
 
     <Button
         android:text="cancel"
@@ -32,4 +64,54 @@
         android:layout_marginRight="19dp"
         android:layout_marginEnd="19dp"
         android:id="@+id/btn_cancel" />
+
+    <Button
+        android:text="set"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="48dp"
+        android:layout_marginStart="48dp"
+        android:id="@+id/btn_set"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="content content"
+        android:id="@+id/text_content"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_below="@+id/linear_two"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/linear_three"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@+id/text_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+        <ImageView
+            android:id="@+id/image_one"
+            android:src="@drawable/default_bread"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_toRightOf="@+id/image_one"
+            android:id="@+id/image_two"
+            android:src="@drawable/default_bread"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_toRightOf="@+id/image_two"
+            android:id="@+id/image_three"
+            android:src="@drawable/default_bread"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </RelativeLayout>
