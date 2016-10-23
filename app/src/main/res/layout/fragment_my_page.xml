@@ -4,44 +4,113 @@
     android:layout_height="match_parent"
     tools:context="com.bread.hwang.bread.mypage.MyPageFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <ImageView
+        android:id="@+id/image_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/default_bread" />
+
+    <LinearLayout
+        android:id="@+id/linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="updatefragment" />
+        android:layout_below="@+id/image_logo"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/image_user_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/default_bread" />
+
+        <TextView
+            android:id="@+id/text_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/image_user_profile"
+            android:layout_marginTop="10dp"
+            android:text="BreadWriter"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/text_userid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_username"
+            android:layout_marginTop="10dp"
+            android:text="bread1234"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_two"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linear"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="My Information Update!!"
+            android:textSize="15sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_mypageUpdate"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textView"
+                android:gravity="center"
+                android:text="myPage Update!!!"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/text_passwordUpdate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textView"
+                android:gravity="center"
+                android:text="password Update!!!"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+    </LinearLayout>
 
     <Button
-        android:text="updateprofile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView3"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="151dp"
-        android:id="@+id/btn_update_profile" />
-
-    <Button
-        android:text="logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_update_profile"
-        android:layout_toLeftOf="@+id/btn_update_profile"
-        android:layout_toStartOf="@+id/btn_update_profile"
-        android:layout_marginRight="13dp"
-        android:layout_marginEnd="13dp"
-        android:layout_marginTop="116dp"
-        android:id="@+id/btn_logout" />
-
-    <Button
-        android:text="byebye"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="22dp"
-        android:layout_marginStart="22dp"
         android:id="@+id/btn_bye"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/btn_logout"
         android:layout_alignBottom="@+id/btn_logout"
-        android:layout_toRightOf="@+id/btn_update_profile"
-        android:layout_toEndOf="@+id/btn_update_profile" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:text="byebye" />
+
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/linear_two"
+        android:layout_marginTop="96dp"
+        android:text="logout" />
 
 
 </RelativeLayout>

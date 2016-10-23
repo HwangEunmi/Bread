@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.bread.hwang.bread.R;
 import com.bread.hwang.bread.SplashActivity;
@@ -24,6 +25,7 @@ public class MyPageFragment extends Fragment {
     /* 로그아웃API, 회원탈퇴API */
      /* 일단 로그아웃, 탈퇴하면 바로 Splash화면으로 이동(Dialog 확인창 이런건 나중에 구현) */
     Intent intent;
+    TextView updateText;
 
     public MyPageFragment() {
         // Required empty public constructor
@@ -35,9 +37,8 @@ public class MyPageFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_my_page, container,false);
-
-        Button updateprofile = (Button)view.findViewById(R.id.btn_update_profile);
-        updateprofile.setOnClickListener(new View.OnClickListener() {
+        updateText = (TextView)view.findViewById(R.id.text_mypageUpdate);
+        updateText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 intent = new Intent(getContext(), UpdateProfileActivity.class);
