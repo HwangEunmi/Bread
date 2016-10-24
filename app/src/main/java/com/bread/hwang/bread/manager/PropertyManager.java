@@ -48,8 +48,8 @@ public class PropertyManager {
         mEditor.commit();
     }
 
-    public long getUserId() {
-        return mPrefs.getLong(KEY_USER_ID, 0);
+    public String getUserId() {
+        return mPrefs.getString(KEY_USER_ID, "");
     }
 
     public void setUserName(String username) {
@@ -66,7 +66,8 @@ public class PropertyManager {
         mEditor.commit();
     }
 
-    public int getUserPassword() {
-        return mPrefs.getInt(KEY_USER_PASSWORD, 0);
+    public String getUserPassword() {
+        return mPrefs.getString(KEY_USER_PASSWORD, "");
     }
+
 }

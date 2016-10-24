@@ -1,7 +1,11 @@
 package com.bread.hwang.bread;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.icu.text.DisplayContext;
+import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -15,14 +19,17 @@ import android.widget.Toast;
 
 import com.bread.hwang.bread.manager.PropertyManager;
 
+import static com.bread.hwang.bread.MyApplication.context;
+
 public class LoginActivity extends AppCompatActivity {
 /* 로그인API */
     /* SharedPreference로 유저의 id, nickname(name), password 저장하기(로그인API할때) */
 
     Intent intent;
     EditText idText, passwordText;
-
     String password;
+    SharedPreferences mPrefs;
+    SharedPreferences.Editor mEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,23 +48,25 @@ public class LoginActivity extends AppCompatActivity {
 
                 String userId = idText.getText().toString();
                 PropertyManager.getInstance().setUserId(userId);
-            /*SharedPreference에 저장된 값을 가져와서 지금 입력된 값이랑 비교하기 (저거 set이 아니라 get으로 가져와서 비교해야 함) */
                 String userPass = passwordText.getText().toString();
                 PropertyManager.getInstance().setUserPassword(userPass);
 
                 if (userPass.toString().length() < 6) {
-                    Toast.makeText(LoginActivity.this, "ssi", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "You have to write to here more!", Toast.LENGTH_SHORT).show();
                 }
 
-                if (TextUtils.isEmpty(userId)) {
-                    Toast.makeText(LoginActivity.this, getResources().getString(R.string.hint_id), Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(""+userId)) {
+                    Toast.makeText(LoginActivity.this, "Please enter your ID", Toast.LENGTH_SHORT).show();
                 }
-                if (!TextUtils.isEmpty(userId) && userPass.toString().length() > 7) {
+                if (!TextUtils.isEmpty(""+userId) && userPass.toString().length() > 7) {
                     intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
+
             }
         });
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        mEditor = mPrefs.edit();
 
         Button membership = (Button) findViewById(R.id.btn_membership);
         membership.setOnClickListener(new View.OnClickListener() {

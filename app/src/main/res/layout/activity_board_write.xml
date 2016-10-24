@@ -95,23 +95,23 @@
         android:layout_alignParentStart="true">
         <ImageView
             android:id="@+id/image_one"
-            android:src="@drawable/default_bread"
-            android:layout_weight="1"
+            android:src="@drawable/default_photo"
+            android:layout_weight="1.00"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent" />
         <ImageView
             android:layout_toRightOf="@+id/image_one"
             android:id="@+id/image_two"
-            android:src="@drawable/default_bread"
-            android:layout_weight="1"
+            android:src="@drawable/default_photo"
+            android:layout_weight="1.00"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent" />
         <ImageView
             android:layout_toRightOf="@+id/image_two"
+            android:src="@drawable/default_photo"
             android:id="@+id/image_three"
-            android:src="@drawable/default_bread"
-            android:layout_weight="1"
+            android:layout_weight="1.00"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent" />
     </LinearLayout>
 </RelativeLayout>

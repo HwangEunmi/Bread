@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        /* BoardListFragment랑 MyPageFragment랑 TabHost 셋팅하기 (네비게이션 다 끝나고) */
 
         tabHost = (FragmentTabHost) findViewById(R.id.tabhost);
         ImageView boardIndicator = new ImageView(this);

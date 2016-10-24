@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bread.hwang.bread.manager.PropertyManager;
 import com.bumptech.glide.Glide;
 
 import java.io.File;
@@ -39,6 +41,7 @@ public class MembershipActivity extends AppCompatActivity {
     ImageView profileView;
 
     File uploadFile = null;
+    AlertDialog dialog;
 
     private static final int RC_GET_IMAGE = 1;
     private static final int RC_PERMISSION = 500;
@@ -56,6 +59,20 @@ public class MembershipActivity extends AppCompatActivity {
         passConfirmText = (EditText) findViewById(R.id.edit_pass_confirm);
         profileView = (ImageView) findViewById(R.id.image_profile);
 
+        idConfirmView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onOverlapId();
+            }
+        });
+
+        nameConfirmView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onOverlapName();
+            }
+        });
+
         Button camera = (Button) findViewById(R.id.btn_camera);
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,8 +89,16 @@ public class MembershipActivity extends AppCompatActivity {
         set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                intent = new Intent(MembershipActivity.this, LoginActivity.class);
-//                startActivity(intent);
+                setNotMatchPassword(v);
+
+                /* 회원가입에선 필요없는듯 (again) */
+//                String userId = idText.getText().toString();
+//                PropertyManager.getInstance().setUserId(userId);
+//                String userName = nameText.getText().toString();
+//                PropertyManager.getInstance().setUserName(userName);
+//                String userPass = passText.getText().toString();
+//                PropertyManager.getInstance().setUserPassword(userPass);
+
                 finish();
             }
         });
@@ -89,6 +114,56 @@ public class MembershipActivity extends AppCompatActivity {
         });
 
         checkPermission();
+    }
+
+    public void setNotMatchPassword(View view) {
+        String onePassword = passText.getText().toString();
+        String twoPassword = passConfirmText.getText().toString();
+
+        if(onePassword != twoPassword) {
+            Snackbar.make(view, "Please enter your ID", Snackbar.LENGTH_SHORT).setAction("OK", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            passText.setText("");
+                            passConfirmText.setText("");
+                        }
+                    }).show();
+        }
+    }
+
+    public void onOverlapId() {
+        final String id = idText.getText().toString();
+        /* 아이디중복 API */
+        AlertDialog.Builder builder = new AlertDialog.Builder(MembershipActivity.this);
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        builder.setTitle("Confirm ID");
+        builder.setMessage(" Overlap ID");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                idText.setText("");
+            }
+        });
+        dialog = builder.create();
+        dialog.show();
+    }
+
+    public void onOverlapName() {
+        String name = nameText.getText().toString();
+        /* 이름중복 API */
+        AlertDialog.Builder builder = new AlertDialog.Builder(MembershipActivity.this);
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        builder.setTitle("Confirm Name");
+        builder.setMessage(" Overlap Name");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                nameText.setText("");
+            }
+        });
+
+        dialog = builder.create();
+        dialog.show();
     }
 
     @Override

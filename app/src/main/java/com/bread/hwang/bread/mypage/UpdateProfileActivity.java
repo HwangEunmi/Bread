@@ -19,9 +19,11 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bread.hwang.bread.R;
+import com.bread.hwang.bread.manager.PropertyManager;
 import com.bumptech.glide.Glide;
 
 import java.io.File;
@@ -45,13 +47,13 @@ public class UpdateProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_profile);
-        userName = (EditText)findViewById(R.id.edit_username);
-        recentlyPassword = (EditText)findViewById(R.id.edit_recentlyPassword);
-        nowPassword = (EditText)findViewById(R.id.edit_newPassword);
-        morePassword = (EditText)findViewById(R.id.edit_morePassword);
-        userProfileImage = (ImageView)findViewById(R.id.image_user_profile);
+        userName = (EditText) findViewById(R.id.edit_username);
+        recentlyPassword = (EditText) findViewById(R.id.edit_recentlyPassword);
+        nowPassword = (EditText) findViewById(R.id.edit_newPassword);
+        morePassword = (EditText) findViewById(R.id.edit_morePassword);
+        userProfileImage = (ImageView) findViewById(R.id.image_user_profile);
 
-        Button camera = (Button)findViewById(R.id.btn_camera);
+        Button camera = (Button) findViewById(R.id.btn_camera);
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,7 +63,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
             }
         });
 
-        Button set = (Button)findViewById(R.id.btn_set);
+        Button set = (Button) findViewById(R.id.btn_set);
         set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +71,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
             }
         });
 
-        Button cancel = (Button)findViewById(R.id.btn_cancel);
+        Button cancel = (Button) findViewById(R.id.btn_cancel);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,13 +88,15 @@ public class UpdateProfileActivity extends AppCompatActivity {
         currentPassword = recentlyPassword.getText().toString();
         newPassword = nowPassword.getText().toString();
         againPassword = morePassword.getText().toString();
-        /* PropertyManager에서 현재 유저의 비밀번호 가져와서 currentPassword랑 비교  */
 
-        if(currentPassword == newPassword) {
-            if(newPassword != againPassword) {
+        String password = PropertyManager.getInstance().getUserPassword();
+
+        if(password.equals(currentPassword)) {
+            if(!newPassword.equals(againPassword)) {
                 Toast.makeText(UpdateProfileActivity.this, "패스워드를 다시 입력해주세요", Toast.LENGTH_SHORT).show();
             }else {
                 /* 패스워드 수정 API */
+
             }
         }else {
             Toast.makeText(UpdateProfileActivity.this, "패스워드가 다릅니다", Toast.LENGTH_SHORT).show();
@@ -110,6 +114,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 Cursor c = getContentResolver().query(uri, new String[]{MediaStore.Images.Media.DATA}, null, null, null);
 
                 if (c.moveToNext()) {
+
                     String path = c.getString(c.getColumnIndex(MediaStore.Images.Media.DATA));
                     uploadFile = new File(path);
 
@@ -119,8 +124,8 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 }
             }
         }
-
     }
+
     private void finishNoPermission() {
         Toast.makeText(this, "no permission", Toast.LENGTH_SHORT).show();
         finish();
@@ -142,6 +147,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
     private void requestPermission() {
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, RC_PERMISSION);
     }
+
     private void checkPermission() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
