@@ -7,6 +7,10 @@
     android:layout_height="wrap_content"
     tools:context="com.bread.hwang.bread.SplashActivity">
 
+    <include
+        android:id="@+id/toolbar_login"
+        layout="@layout/view_toolbar"></include>
+
     <ImageView
         android:src="@drawable/splash"
         android:layout_width="150dp"

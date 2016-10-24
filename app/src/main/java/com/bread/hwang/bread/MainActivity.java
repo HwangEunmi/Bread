@@ -37,9 +37,9 @@ public class MainActivity extends AppCompatActivity {
 
         tabHost = (FragmentTabHost) findViewById(R.id.tabhost);
         ImageView boardIndicator = new ImageView(this);
-        boardIndicator.setImageResource(android.R.drawable.btn_star);
+        boardIndicator.setImageResource(R.drawable.tab_board);
         ImageView myPageIndicator = new ImageView(this);
-        myPageIndicator.setImageResource(android.R.drawable.btn_star_big_on);
+        myPageIndicator.setImageResource(R.drawable.tab_mypage);
 
         tabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
         tabHost.addTab(tabHost.newTabSpec(TAG_TAB_BOARD).setIndicator(boardIndicator), BoardListFragment.class, null);

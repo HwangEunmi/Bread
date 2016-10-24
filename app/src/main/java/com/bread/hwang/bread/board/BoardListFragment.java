@@ -6,11 +6,15 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
 
+import com.bread.hwang.bread.MainActivity;
 import com.bread.hwang.bread.R;
 import com.bread.hwang.bread.adapter.BoardListAdapter;
 import com.bread.hwang.bread.data.Board;
@@ -68,15 +72,33 @@ public class BoardListFragment extends Fragment {
             Board b = new Board();
             User user = new User();
             user.setNickname("빵");
+            user.setImagePath("ImageView");
+            b.setImagePath("PreView");
             b.setUserNumber(user);
             b.setContent("hi hi hello hi hello ");
-            b.setAudioCount(i);
-            b.setImageCount(i);
-            b.setVideoCount(i);
-            b.setFileCount(b.getAudioCount(), b.getVideoCount(), b.getImageCount());
-            b.setReplyCount(i);
+            b.setAudioCount(1);
+            b.setImageCount(1);
+            b.setVideoCount(1);
+            b.setReplyCount(1);
+            b.setFileCount(b.getAudioCount(), b.getImageCount(), b.getVideoCount());
             b.setRegDate("2016.10.11");
             mAdapter.add(b);
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.activity_main, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_search) {
+            Intent intent = new Intent(getContext(), BoardSearchActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

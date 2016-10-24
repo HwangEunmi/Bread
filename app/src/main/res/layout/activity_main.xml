@@ -6,7 +6,12 @@
     android:layout_height="match_parent"
     tools:context="com.bread.hwang.bread.MainActivity">
 
+    <include
+        android:id="@+id/toolbar_main"
+        layout="@layout/view_toolbar"></include>
+
     <android.support.v4.app.FragmentTabHost
+        android:layout_below="@+id/toolbar_main"
         android:id="@+id/tabhost"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
