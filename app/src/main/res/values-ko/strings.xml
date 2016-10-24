@@ -20,8 +20,8 @@
     <!-- activity_login -->
     <string name="button_login">로그인 </string>
     <string name="button_membership">회원가입 </string>
-    <string name="hint_id">아이디를 입력해주세요 </string>
-    <string name="hint_password">비밀번호를 입력해주세요 </string>
+    <string name="hint_id">   아이디를 입력해주세요 </string>
+    <string name="hint_password">   비밀번호를 입력해주세요 </string>
 
     <!-- activity_membership -->
     <string name="button_set">등록하기 </string>

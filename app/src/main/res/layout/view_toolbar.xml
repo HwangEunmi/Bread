@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="40dp">
 
-</RelativeLayout>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/default_toolbar"
+        android:title="">
+    </android.support.v7.widget.Toolbar>
+
+    <TextView
+        android:gravity="center"
+        android:textSize="30sp"
+        android:textColor="@android:color/white"
+        android:layout_gravity="center"
+        android:text=""
+        android:id="@+id/text_toolbar_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</FrameLayout>

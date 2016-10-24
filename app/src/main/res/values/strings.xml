@@ -19,8 +19,8 @@
     <!-- activity_login -->
     <string name="button_login">Login </string>
     <string name="button_membership">Membership </string>
-    <string name="hint_id">Please enter your id </string>
-    <string name="hint_password">Please enter your password </string>
+    <string name="hint_id">   Please enter your id </string>
+    <string name="hint_password">   Please enter your password </string>
 
     <!-- activity_membership -->
     <string name="button_set">Set </string>

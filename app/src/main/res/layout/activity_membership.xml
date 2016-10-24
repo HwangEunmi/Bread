@@ -6,22 +6,34 @@
     android:layout_height="wrap_content"
     tools:context="com.bread.hwang.bread.MembershipActivity">
 
-    <include layout="@layout/view_membership_header"></include>
+    <include
+        android:id="@+id/toolbar_membership"
+        layout="@layout/view_toolbar"></include>
+
+    <include layout="@layout/view_membership_header"
+        android:id="@+id/layout_header"></include>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/membership_header">
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/layout_header"
+        android:layout_height="450dp">
 
         <EditText
+            android:textColorHint="@android:color/holo_blue_light"
+            android:background="@drawable/shape_stroke_square"
             android:id="@+id/edit_id"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="15dp"
-            android:hint="id enter" />
+            android:hint="id enter"
+            android:paddingLeft="20dp"
+            android:layout_marginTop="120dp"
+            android:layout_marginRight="15dp" />
 
         <LinearLayout
             android:id="@+id/linear"
@@ -31,61 +43,93 @@
             android:orientation="horizontal">
 
             <TextView
+                android:textColor="@color/colorAccent"
                 android:id="@+id/text_overlap_id"
                 android:layout_width="0dp"
                 android:layout_height="20dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="50dp"
                 android:layout_weight="0.95"
-                android:text="Check Overlap ID" />
+                android:text="Check Overlap ID"
+                android:layout_marginTop="10dp" />
 
             <TextView
+                android:textColor="@color/colorAccent"
                 android:id="@+id/text_overlap_name"
                 android:layout_width="0dp"
                 android:layout_height="20dp"
                 android:layout_toRightOf="@+id/text_overlap_id"
                 android:layout_weight="1"
-                android:text="Check Overlap Name" />
+                android:text="Check Overlap Name"
+                android:layout_marginTop="10dp" />
 
         </LinearLayout>
 
         <EditText
+            android:layout_marginLeft="15dp"
+            android:textColorHint="@android:color/holo_blue_light"
+            android:background="@drawable/shape_stroke_square"
             android:id="@+id/edit_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:layout_below="@+id/linear"
-            android:hint="Enter Name" />
+            android:hint="Enter Name"
+            android:paddingLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginRight="15dp" />
 
         <EditText
+            android:layout_marginLeft="15dp"
+            android:textColorHint="@android:color/holo_blue_light"
+            android:background="@drawable/shape_stroke_square"
             android:id="@+id/edit_password"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_below="@+id/edit_name"
-            android:hint="Password" />
+            android:hint="Password"
+            android:paddingLeft="20dp"
+            android:layout_height="35dp"
+            android:layout_marginRight="15dp" />
+
+        <Button
+            android:background="@drawable/btn_camera"
+            android:id="@+id/btn_camera"
+            android:layout_below="@+id/edit_pass_confirm"
+            android:layout_toRightOf="@+id/image_profile"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
 
         <EditText
+            android:textColorHint="@android:color/holo_blue_light"
+            android:background="@drawable/shape_stroke_square"
             android:id="@+id/edit_pass_confirm"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
+            android:hint="Agin Check Password"
+            android:paddingLeft="20dp"
+            android:layout_marginTop="15dp"
             android:layout_below="@+id/edit_password"
-            android:hint="Agin Check Password" />
+            android:layout_alignLeft="@+id/edit_password"
+            android:layout_alignStart="@+id/edit_password"
+            android:layout_marginRight="15dp" />
 
         <ImageView
             android:id="@+id/image_profile"
             android:layout_width="200dp"
+            android:src="@drawable/default_profile"
             android:layout_height="200dp"
-            android:layout_below="@+id/edit_pass_confirm"
-            app:srcCompat="@mipmap/ic_launcher" />
-
-        <Button
-            android:id="@+id/btn_camera"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_below="@+id/edit_pass_confirm"
-            android:layout_toRightOf="@+id/image_profile" />
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/btn_camera" />
 
 
     </RelativeLayout>
 
-    <include layout="@layout/view_membership_bottom"></include>
+    <include layout="@layout/view_membership_bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"></include>
 
 </RelativeLayout>
