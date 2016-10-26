@@ -62,9 +62,9 @@ public class BoardDetailReplyAdapter extends BaseAdapter implements BoardDetailR
 
             view.setOnBoardReplyUpdateClickListener(this);
             view.setOnBoardReplyDeleteClickListener(this);
-            convertView.setTag(view);
+
         } else {
-            view = (BoardDetailReplyViewHolder) convertView.getTag();
+            view = (BoardDetailReplyViewHolder) convertView;
         }
         view.setReply(items.get(position));
 
