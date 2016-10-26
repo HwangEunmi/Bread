@@ -29,7 +29,7 @@ public class BoardListViewHolder extends FrameLayout {
         boardImage = (ImageView) findViewById(R.id.image_board);
         profileImage = (ImageView) findViewById(R.id.image_profile);
         content = (TextView) findViewById(R.id.text_content);
-        userName = (TextView) findViewById(R.id.text_reply_username);
+        userName = (TextView) findViewById(R.id.text_username);
         commentCount = (TextView) findViewById(R.id.text_comment_count);
         fileCount = (TextView) findViewById(R.id.text_file_count);
         date = (TextView) findViewById(R.id.text_date);
@@ -48,6 +48,7 @@ public class BoardListViewHolder extends FrameLayout {
     public void setBoardList(Board board) {
         this.board = board;
 
+        /*
         Glide.with(profileImage.getContext())
                 .load(board.getUserNumber().getImagePath())
                 .into(profileImage);
@@ -55,12 +56,13 @@ public class BoardListViewHolder extends FrameLayout {
         Glide.with(boardImage.getContext())
                 .load(board.getImagePath())
                 .into(boardImage);
+        */
 
         date.setText(board.getRegDate());
         content.setText(board.getContent());
         userName.setText(board.getUserNumber().getNickname());
         commentCount.setText("" + board.getReplyCount());
-        fileCount.setText("" + fileCount);
+        fileCount.setText("" + board.getImageCount()+board.getVideoCount()+board.getAudioCount());
     }
 
     public interface OnBoardItemClickListener {

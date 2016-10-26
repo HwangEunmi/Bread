@@ -41,6 +41,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
     String currentPassword, newPassword, againPassword;
 
     private static final int RC_GET_IMAGE = 100;
+    private static final int RC_CROP_IMAGE = 200;
     private static final int RC_PERMISSION = 500;
 
     @Override
@@ -117,6 +118,16 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
                     String path = c.getString(c.getColumnIndex(MediaStore.Images.Media.DATA));
                     uploadFile = new File(path);
+
+                    intent = new Intent("com.android.camera.action.CROP");
+                    intent.setType(path);
+                    intent.putExtra("outputX", 90);
+                    intent.putExtra("outputY", 90);
+                    intent.putExtra("aspectX", 1);
+                    intent.putExtra("aspectY", 1);
+                    intent.putExtra("scale", true);
+                    intent.putExtra("return-data", true);
+                    startActivityForResult(intent, RC_CROP_IMAGE);
 
                     Glide.with(userProfileImage.getContext())
                             .load(uploadFile)

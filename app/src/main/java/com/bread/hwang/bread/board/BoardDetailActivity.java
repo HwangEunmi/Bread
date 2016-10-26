@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -39,19 +40,19 @@ public class BoardDetailActivity extends AppCompatActivity {
     ImageButton replyUpdate, replyDelete;
     AlertDialog dialog;
 
+    private static final String TAG_REPLY_UPDATE = "replyupdate";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board_detail);
 
         View replyList = getLayoutInflater().inflate(R.layout.view_detail_reply, null);
-        replyUpdate = (ImageButton)replyList.findViewById(R.id.btn_reply_update);
-        replyDelete = (ImageButton)replyList.findViewById(R.id.btn_reply_delete);
+        replyUpdate = (ImageButton) replyList.findViewById(R.id.btn_reply_update);
+        replyDelete = (ImageButton) replyList.findViewById(R.id.btn_reply_delete);
         /* 나중에 View. GONE으로 수정 */
         replyUpdate.setVisibility(View.VISIBLE);
         replyDelete.setVisibility(View.VISIBLE);
-
-
 
         listView = (ListView) findViewById(R.id.listView);
 
@@ -61,22 +62,24 @@ public class BoardDetailActivity extends AppCompatActivity {
         mAdapter.setOnAdapterBoardReplyDeleteClickListener(new BoardDetailReplyAdapter.OnAdapterBoardReplyDeleteClickListener() {
             @Override
             public void onAdapterBoardReplyDeleteClick(BoardDetailReplyAdapter adapter, BoardDetailReplyViewHolder view, Reply reply) {
-                Toast.makeText(BoardDetailActivity.this, "삭제", Toast.LENGTH_SHORT).show();
-                getReplyDeleteList();
+                int pos = (Integer)view.getTag();
+
+                getReplyDeleteList(pos);
             }
         });
 
         mAdapter.setOnAdapterBoardReplyUpdateClickListener(new BoardDetailReplyAdapter.OnAdapterBoardReplyUpdateClickListener() {
             @Override
             public void onAdapterBoardReplyUpdateClick(BoardDetailReplyAdapter adapter, BoardDetailReplyViewHolder view, Reply reply) {
-            //    Toast.makeText(BoardDetailActivity.this, "수정", Toast.LENGTH_SHORT).show();
+
                 getReplyUpdateList();
             }
         });
 
-        replyEdit = (EditText)findViewById(R.id.edit_comment);
 
-        Button replyButton = (Button)findViewById(R.id.btn_set);
+        replyEdit = (EditText) findViewById(R.id.edit_comment);
+
+        Button replyButton = (Button) findViewById(R.id.btn_set);
         replyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,11 +90,11 @@ public class BoardDetailActivity extends AppCompatActivity {
                 Reply reply = new Reply();
                 User user = new User();
                 user.setNickname("마카롱");
-                user.setImagePath(""+R.drawable.default_bread);
+                user.setImagePath("" + R.drawable.default_bread);
                 reply.setUserNumber(user);
                 reply.setRegDate("2016.10.1");
                 reply.setContent(replyText);
-             //   mAdapter.clear();
+                //   mAdapter.clear();
                 mAdapter.add(reply);
             }
         });
@@ -159,12 +162,22 @@ public class BoardDetailActivity extends AppCompatActivity {
         FragmentManager fm = getSupportFragmentManager();
         ReplyUpdateFragment dialog = new ReplyUpdateFragment();
 
-                /* Bundle로 boardid등 넘기기*/
+        int count = mAdapter.getCount();
 
+        if (count > 0) {
+            intent = getIntent();
+            String comment = intent.getStringExtra(TAG_REPLY_UPDATE);
+            Toast.makeText(BoardDetailActivity.this, "comment : " + comment, Toast.LENGTH_SHORT).show();
+            Reply reply = new Reply();
+            reply.setContent(comment);
+            //mAdapter.set(position, reply);
+        }
+        /* Bundle로 boardid등 넘기기*/
         dialog.show(fm, "commentdialog");
+
     }
 
-    private void getReplyDeleteList() {
+    private void getReplyDeleteList(int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setIcon(android.R.drawable.ic_dialog_alert);
         builder.setTitle("Delete Reply");

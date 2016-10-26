@@ -10,22 +10,36 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.bread.hwang.bread.board.BoardSearchActivity">
 
-    <Spinner
-        android:layout_width="100dp"
-        android:id="@+id/spinner"
-        android:layout_height="40dp" />
 
-    <SearchView
-        android:layout_toRightOf="@+id/spinner"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:id="@+id/searchView" />
+    <include
+        android:id="@+id/toolbar_board_search"
+        layout="@layout/view_toolbar"></include>
+
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar_board_search">
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="100dp"
+            android:layout_height="40dp" />
+
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_height="40dp"
+            android:layout_toRightOf="@+id/spinner"
+            android:layout_width="match_parent" />
+
+    </LinearLayout>
 
     <ListView
+        android:layout_below="@+id/linear"
+        android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/spinner"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/listView" />
+        android:layout_alignParentStart="true" />
+
 </RelativeLayout>

@@ -3,12 +3,14 @@ package com.bread.hwang.bread.board;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bread.hwang.bread.MainActivity;
@@ -25,6 +27,8 @@ public class BoardSearchActivity extends AppCompatActivity {
     /* Spinner의 구성이 작성자, 날짜인데 키워드가 있을경우 작성자검색/ 없으면 날짜순
     (BeautyTipFragment쪽 참고) 게시물 검색해오기 (일단 페이징 처리 ㄴㄴ, 한번에 뿌리기)*/
 
+    Toolbar toolbar;
+    TextView toolbarTitle;
     Intent intent;
     Spinner spinner;
     ListView listView;
@@ -36,6 +40,12 @@ public class BoardSearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board_search);
+
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbarTitle = (TextView)findViewById(R.id.text_toolbar_title);
+        toolbarTitle.setText("게시물 찾기 화면");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         listView = (ListView) findViewById(R.id.listView);
         mAdapter = new BoardSearchAdapter();

@@ -72,15 +72,15 @@ public class BoardListFragment extends Fragment {
             Board b = new Board();
             User user = new User();
             user.setNickname("빵");
-            user.setImagePath("ImageView");
-            b.setImagePath("PreView");
+           // user.setImagePath(getResources().getDrawable(R.drawable.default_user_profile).toString());
+           // b.setImagePath("PreView");
             b.setUserNumber(user);
             b.setContent("hi hi hello hi hello ");
             b.setAudioCount(1);
             b.setImageCount(1);
             b.setVideoCount(1);
             b.setReplyCount(1);
-            b.setFileCount(b.getAudioCount(), b.getImageCount(), b.getVideoCount());
+            b.setFileCount(b.getAudioCount(),b.getImageCount(), b.getVideoCount());
             b.setRegDate("2016.10.11");
             mAdapter.add(b);
         }

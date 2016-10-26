@@ -59,13 +59,13 @@ public class BoardDetailReplyViewHolder extends FrameLayout {
 
     public void setReply(Reply reply) {
         this.reply = reply;
-        Glide.with(profileImage.getContext())
-                .load(reply.getUserNumber().getImagePath())
-                .into(profileImage);
-
-        userName.setText(reply.getUserNumber().getNickname());
+//        Glide.with(profileImage.getContext())
+//                .load(reply.getUserNumber().getImagePath())
+//                .into(profileImage);
+//
+//        userName.setText(reply.getUserNumber().getNickname());
         content.setText(reply.getContent());
-        date.setText(reply.getRegDate());
+        //date.setText(reply.getRegDate());
     }
 
     public interface OnBoardReplyUpdateClickListener {

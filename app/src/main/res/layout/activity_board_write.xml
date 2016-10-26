@@ -10,8 +10,13 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.bread.hwang.bread.board.BoardWriteActivity">
 
+    <include
+        android:id="@+id/toolbar_board_write"
+        layout="@layout/view_toolbar"></include>
 
     <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/toolbar_board_write"
         android:orientation="horizontal"
         android:id="@+id/linear"
         android:layout_width="match_parent"

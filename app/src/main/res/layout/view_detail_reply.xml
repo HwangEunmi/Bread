@@ -54,6 +54,7 @@
             android:orientation="horizontal">
 
             <ImageButton
+                android:focusable="false"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:id="@+id/btn_reply_update"
@@ -61,6 +62,7 @@
                 android:background="@drawable/default_bread" />
 
             <ImageButton
+                android:focusable="false"
                 android:layout_weight="1"
                 android:id="@+id/btn_reply_delete"
                 android:layout_width="0dp"

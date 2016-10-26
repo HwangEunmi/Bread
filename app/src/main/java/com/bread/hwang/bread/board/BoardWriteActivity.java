@@ -15,6 +15,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -30,6 +31,9 @@ public class BoardWriteActivity extends AppCompatActivity {
   /* 게시물 작성(등록), 수정 API*/
     /* 게시물 등록API, 게시물 수정API*/
 
+    Toolbar toolbar;
+    TextView toolbarTitle;
+
     Intent intent;
     ImageView imageOne, imageTwo, imageThree, userProfile;
     TextView content, userName;
@@ -43,6 +47,12 @@ public class BoardWriteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board_write);
+
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbarTitle = (TextView)findViewById(R.id.text_toolbar_title);
+        toolbarTitle.setText("게시물 작성 화면");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         imageOne = (ImageView)findViewById(R.id.image_one);
         imageTwo = (ImageView)findViewById(R.id.image_two);

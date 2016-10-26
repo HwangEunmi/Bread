@@ -42,6 +42,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbarTitle = (TextView)findViewById(R.id.text_toolbar_title);
+        toolbarTitle.setText("로그인 화면");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
