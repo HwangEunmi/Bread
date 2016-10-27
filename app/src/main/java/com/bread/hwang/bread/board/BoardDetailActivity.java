@@ -1,5 +1,6 @@
 package com.bread.hwang.bread.board;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.Image;
@@ -7,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,12 +21,18 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bread.hwang.bread.MyApplication;
 import com.bread.hwang.bread.R;
 import com.bread.hwang.bread.adapter.BoardDetailReplyAdapter;
 import com.bread.hwang.bread.data.Reply;
 import com.bread.hwang.bread.data.User;
 import com.bread.hwang.bread.manager.PropertyManager;
 import com.bread.hwang.bread.view.BoardDetailReplyViewHolder;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeoutException;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class BoardDetailActivity extends AppCompatActivity {
  /* 게시글 상세페이지 */
@@ -39,6 +47,8 @@ public class BoardDetailActivity extends AppCompatActivity {
     EditText replyEdit;
     ImageButton replyUpdate, replyDelete;
     AlertDialog dialog;
+    int position;
+    String updateContent;
 
     private static final String TAG_REPLY_UPDATE = "replyupdate";
 
@@ -62,20 +72,18 @@ public class BoardDetailActivity extends AppCompatActivity {
         mAdapter.setOnAdapterBoardReplyDeleteClickListener(new BoardDetailReplyAdapter.OnAdapterBoardReplyDeleteClickListener() {
             @Override
             public void onAdapterBoardReplyDeleteClick(BoardDetailReplyAdapter adapter, BoardDetailReplyViewHolder view, Reply reply) {
-                int pos = (Integer)view.getTag();
-
-                getReplyDeleteList(pos);
+                position = (Integer)view.getTag();
+                getReplyDeleteList(position, reply);
             }
         });
 
         mAdapter.setOnAdapterBoardReplyUpdateClickListener(new BoardDetailReplyAdapter.OnAdapterBoardReplyUpdateClickListener() {
             @Override
             public void onAdapterBoardReplyUpdateClick(BoardDetailReplyAdapter adapter, BoardDetailReplyViewHolder view, Reply reply) {
+                position = (Integer)view.getTag();
 
-                getReplyUpdateList();
             }
         });
-
 
         replyEdit = (EditText) findViewById(R.id.edit_comment);
 
@@ -157,8 +165,7 @@ public class BoardDetailActivity extends AppCompatActivity {
 //        deleteMenuItem.setVisible(false);
     }
 
-    /* 댓글의 수정/삭제 버튼을 위한 */
-    private void getReplyUpdateList() {
+    public void getReplyUpdateList(int position, String content) {
         FragmentManager fm = getSupportFragmentManager();
         ReplyUpdateFragment dialog = new ReplyUpdateFragment();
 
@@ -166,18 +173,17 @@ public class BoardDetailActivity extends AppCompatActivity {
 
         if (count > 0) {
             intent = getIntent();
-            String comment = intent.getStringExtra(TAG_REPLY_UPDATE);
-            Toast.makeText(BoardDetailActivity.this, "comment : " + comment, Toast.LENGTH_SHORT).show();
-            Reply reply = new Reply();
-            reply.setContent(comment);
-            //mAdapter.set(position, reply);
+           // reply.setContent(updateContent);
+//            Toast.makeText(BoardDetailActivity.this, "replyData:" + reply.getContent(), Toast.LENGTH_SHORT).show();
+//            mAdapter.set(position, reply);
         }
+
         /* Bundle로 boardid등 넘기기*/
         dialog.show(fm, "commentdialog");
 
     }
 
-    private void getReplyDeleteList(int position) {
+    private void getReplyDeleteList(int position, Reply reply) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setIcon(android.R.drawable.ic_dialog_alert);
         builder.setTitle("Delete Reply");
@@ -201,5 +207,11 @@ public class BoardDetailActivity extends AppCompatActivity {
 
         dialog = builder.create();
         dialog.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

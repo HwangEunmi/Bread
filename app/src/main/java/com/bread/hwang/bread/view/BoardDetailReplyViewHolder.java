@@ -11,6 +11,10 @@ import com.bread.hwang.bread.R;
 import com.bread.hwang.bread.data.Reply;
 import com.bumptech.glide.Glide;
 
+import java.lang.reflect.ReflectPermission;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Hwang on 2016-10-21.
  */
@@ -20,6 +24,7 @@ public class BoardDetailReplyViewHolder extends FrameLayout {
     ImageView profileImage;
     TextView userName, content, date;
     ImageButton updateButton, deleteButton;
+    int position;
 
     public BoardDetailReplyViewHolder(Context context) {
         super(context);

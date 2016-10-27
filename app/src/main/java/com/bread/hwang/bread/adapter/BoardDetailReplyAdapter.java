@@ -11,6 +11,7 @@ import com.bread.hwang.bread.view.BoardDetailReplyViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by Hwang on 2016-10-21.
@@ -57,17 +58,16 @@ public class BoardDetailReplyAdapter extends BaseAdapter implements BoardDetailR
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         BoardDetailReplyViewHolder view;
+
         if (convertView == null) {
             view = new BoardDetailReplyViewHolder(parent.getContext());
 
-            /**/
-            convertView = view;
-
             view.setOnBoardReplyUpdateClickListener(this);
             view.setOnBoardReplyDeleteClickListener(this);
-
+            view.setTag(position);
         } else {
             view = (BoardDetailReplyViewHolder) convertView;
+            view.setTag(position);
         }
         view.setReply(items.get(position));
 

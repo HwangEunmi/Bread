@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.bread.hwang.bread.R;
 import com.bread.hwang.bread.adapter.BoardDetailReplyAdapter;
+import com.bread.hwang.bread.data.Reply;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,7 +47,7 @@ public class ReplyUpdateFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_reply_update, container, false);
+        final View view = inflater.inflate(R.layout.fragment_reply_update, container, false);
 
         editContent = (EditText) view.findViewById(R.id.edit_content);
         sendButton = (Button) view.findViewById(R.id.btn_send);
@@ -58,11 +59,13 @@ public class ReplyUpdateFragment extends DialogFragment {
 //                Bundle bundle = new Bundle();
 //                bundle.putString(TAG_REPLY_UPDATE, replyContent);
 //                fragment.setArguments(bundle);
+                int position = (Integer)v.getTag();
+                Reply reply = new Reply();
                 replyContent = editContent.getText().toString();
-                Intent intent = new Intent(getContext(), BoardDetailActivity.class);
-                intent.putExtra(TAG_REPLY_UPDATE, replyContent);
-                startActivity(intent);
-                Toast.makeText(getContext(), "reply : "+ replyContent, Toast.LENGTH_SHORT).show();
+                reply.setContent(replyContent);
+                BoardDetailActivity activity = ((BoardDetailActivity)getActivity());
+                activity.getReplyUpdateList(position, replyContent);
+
                 getDialog().dismiss();
             }
         });
