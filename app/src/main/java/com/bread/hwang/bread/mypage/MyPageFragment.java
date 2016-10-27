@@ -21,7 +21,6 @@ import com.bread.hwang.bread.manager.PropertyManager;
  * A simple {@link Fragment} subclass.
  */
 public class MyPageFragment extends Fragment {
- /* (유저정보불러오는 api가 없어....(필요한디..))*/
     /* 비밀번호 수정하는 api도 없어? 그럼 그냥 비번 확인API로 비번 맞는지 확인받고
     * 회원수정API저기다가 비번 넣어서 수정해야될 듯*/
     /* 저 API없으면 그냥 로그인할때 SharedPreference에다가 id, name(nickname), pass) 받아와서 넣어야할듯.. */

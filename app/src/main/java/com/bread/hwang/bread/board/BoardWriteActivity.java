@@ -8,6 +8,8 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.media.Image;
 import android.net.Uri;
+import android.os.Environment;
+import android.os.PersistableBundle;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -16,6 +18,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -26,6 +31,7 @@ import com.bread.hwang.bread.R;
 import com.bumptech.glide.Glide;
 
 import java.io.File;
+import java.io.IOException;
 
 public class BoardWriteActivity extends AppCompatActivity {
   /* 게시물 작성(등록), 수정 API*/
@@ -48,18 +54,33 @@ public class BoardWriteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board_write);
 
-        toolbar = (Toolbar)findViewById(R.id.toolbar);
-        toolbarTitle = (TextView)findViewById(R.id.text_toolbar_title);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbarTitle = (TextView) findViewById(R.id.text_toolbar_title);
         toolbarTitle.setText("게시물 작성 화면");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        imageOne = (ImageView)findViewById(R.id.image_one);
-        imageTwo = (ImageView)findViewById(R.id.image_two);
-        imageThree = (ImageView)findViewById(R.id.image_three);
-        userProfile = (ImageView)findViewById(R.id.image_user_profile);
-        content = (TextView)findViewById(R.id.text_content);
-        userName = (TextView)findViewById(R.id.text_username);
+        imageOne = (ImageView) findViewById(R.id.image_one);
+        imageTwo = (ImageView) findViewById(R.id.image_two);
+        imageThree = (ImageView) findViewById(R.id.image_three);
+        userProfile = (ImageView) findViewById(R.id.image_user_profile);
+        content = (TextView) findViewById(R.id.text_content);
+        userName = (TextView) findViewById(R.id.text_username);
+
+
+        if (savedInstanceState != null) {
+            String onePath = savedInstanceState.getString("onefile");
+            String twoPath = savedInstanceState.getString("twofile");
+            String threePath = savedInstanceState.getString("threefile");
+            if (!TextUtils.isEmpty(onePath)) {
+                uploadOneFile = new File(onePath);
+            } else if (!TextUtils.isEmpty(threePath)) {
+                uploadTwoFile = new File(twoPath);
+            } else {
+                uploadThreeFile = new File(threePath);
+            }
+
+        }
 
         imageOne.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,13 +149,12 @@ public class BoardWriteActivity extends AppCompatActivity {
                             .into(imageOne);
                 }
             }
-        }
-        else if(requestCode == RC_GET_TWO_IMAGE) {
-            if(resultCode == Activity.RESULT_OK) {
+        } else if (requestCode == RC_GET_TWO_IMAGE) {
+            if (resultCode == Activity.RESULT_OK) {
                 Uri uri = data.getData();
                 Cursor c = getContentResolver().query(uri, new String[]{MediaStore.Images.Media.DATA}, null, null, null);
 
-                if(c.moveToNext()) {
+                if (c.moveToNext()) {
                     String path = c.getString(c.getColumnIndex(MediaStore.Images.Media.DATA));
                     uploadTwoFile = new File(path);
 
@@ -143,12 +163,12 @@ public class BoardWriteActivity extends AppCompatActivity {
                             .into(imageTwo);
                 }
             }
-        }else {
-            if(resultCode == Activity.RESULT_OK) {
+        } else {
+            if (resultCode == Activity.RESULT_OK) {
                 Uri uri = data.getData();
                 Cursor c = getContentResolver().query(uri, new String[]{MediaStore.Images.Media.DATA}, null, null, null);
 
-                if(c.moveToNext()) {
+                if (c.moveToNext()) {
                     String path = c.getString(c.getColumnIndex(MediaStore.Images.Media.DATA));
                     uploadThreeFile = new File(path);
 
@@ -160,6 +180,7 @@ public class BoardWriteActivity extends AppCompatActivity {
         }
 
     }
+
     private void checkPermission() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -209,5 +230,35 @@ public class BoardWriteActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        if (uploadOneFile != null) {
+            outState.putString("onefile", uploadOneFile.getAbsolutePath());
+        } else if (uploadTwoFile != null) {
+            outState.putString("twofile", uploadTwoFile.getAbsolutePath());
+        } else {
+            outState.putString("threefile", uploadThreeFile.getAbsolutePath());
+        }
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_cancel) {
+            finish();
+        }
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

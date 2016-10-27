@@ -60,6 +60,9 @@ public class BoardDetailReplyAdapter extends BaseAdapter implements BoardDetailR
         if (convertView == null) {
             view = new BoardDetailReplyViewHolder(parent.getContext());
 
+            /**/
+            convertView = view;
+
             view.setOnBoardReplyUpdateClickListener(this);
             view.setOnBoardReplyDeleteClickListener(this);
 

@@ -1,17 +1,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context="com.bread.hwang.bread.mypage.MyPageFragment">
 
+    <include
+        android:id="@+id/toolbar_mypage"
+        layout="@layout/view_toolbar"></include>
 
     <ImageView
         android:id="@+id/image_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:src="@drawable/default_bread" />
+        android:layout_below="@+id/toolbar_mypage"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/default_logo" />
 
     <LinearLayout
         android:id="@+id/linear"
@@ -23,33 +28,41 @@
 
         <ImageView
             android:id="@+id/image_user_profile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:background="@drawable/shape_stroke_square"
             android:src="@drawable/default_bread" />
 
         <TextView
+            android:textStyle="bold"
+            android:gravity="center"
             android:id="@+id/text_username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
             android:layout_below="@+id/image_user_profile"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/shape_stroke_square"
             android:text="BreadWriter"
             android:textSize="20sp" />
 
         <TextView
+            android:textStyle="bold"
+            android:gravity="center"
             android:id="@+id/text_userid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
             android:layout_below="@+id/text_username"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/shape_stroke_square"
             android:text="bread1234"
             android:textSize="20sp" />
     </LinearLayout>
 
     <LinearLayout
+        android:background="@drawable/shape_stroke_square"
         android:id="@+id/linear_two"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         android:layout_below="@+id/linear"
         android:layout_marginTop="20dp"
         android:gravity="center"
@@ -58,59 +71,67 @@
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:gravity="center"
-            android:text="My Information Update!!"
-            android:textSize="15sp" />
+            android:text="My Information Update"
+            android:textSize="20sp" />
 
         <LinearLayout
+            android:gravity="center"
+            android:background="@drawable/shape_stroke_square"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="110dp"
             android:layout_below="@id/textView"
             android:orientation="horizontal">
 
             <TextView
+                android:textStyle="bold"
                 android:id="@+id/text_mypageUpdate"
-                android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textView"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:text="myPage Update!!!"
+                android:text="myPage Update"
                 android:textSize="20sp" />
 
             <TextView
-                android:layout_weight="1"
+                android:textStyle="bold"
                 android:id="@+id/text_passwordUpdate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textView"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:text="password Update!!!"
+                android:text="password Update"
                 android:textSize="20sp" />
         </LinearLayout>
 
     </LinearLayout>
 
     <Button
+        android:background="@drawable/btn_cancel"
         android:id="@+id/btn_bye"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
+        android:text="byebye"
         android:layout_alignBaseline="@+id/btn_logout"
         android:layout_alignBottom="@+id/btn_logout"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:text="byebye" />
+        android:layout_toLeftOf="@+id/image_logo"
+        android:layout_toStartOf="@+id/image_logo" />
 
     <Button
+        android:background="@drawable/btn_login"
         android:id="@+id/btn_logout"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
+        android:text="logout"
+        android:layout_below="@+id/linear_two"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/linear_two"
-        android:layout_marginTop="96dp"
-        android:text="logout" />
+        android:layout_marginLeft="69dp"
+        android:layout_marginStart="69dp"
+        android:layout_marginTop="19dp" />
 
 
 </RelativeLayout>

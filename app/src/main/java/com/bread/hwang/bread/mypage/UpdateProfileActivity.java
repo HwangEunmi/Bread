@@ -6,7 +6,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Environment;
+import android.os.PersistableBundle;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -14,6 +18,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -27,12 +32,13 @@ import com.bread.hwang.bread.manager.PropertyManager;
 import com.bumptech.glide.Glide;
 
 import java.io.File;
+import java.io.IOException;
+
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class UpdateProfileActivity extends AppCompatActivity {
     /* 마이 페이지 수정하는 화면 */
     /* 비밀번호 확인API, 회원수정API */
-
-     /* 갤러리 연동하니까 Permission받기 */
 
     Intent intent;
     EditText userName, recentlyPassword, nowPassword, morePassword;
@@ -41,8 +47,10 @@ public class UpdateProfileActivity extends AppCompatActivity {
     String currentPassword, newPassword, againPassword;
 
     private static final int RC_GET_IMAGE = 100;
-    private static final int RC_CROP_IMAGE = 200;
+    private static final int CROP_IMAGE = 200;
     private static final int RC_PERMISSION = 500;
+    String path;
+    Uri uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +62,21 @@ public class UpdateProfileActivity extends AppCompatActivity {
         morePassword = (EditText) findViewById(R.id.edit_morePassword);
         userProfileImage = (ImageView) findViewById(R.id.image_user_profile);
 
+        if (savedInstanceState != null) {
+
+            String path = savedInstanceState.getString("filename");
+            if (!TextUtils.isEmpty(path)) {
+                uploadFile = new File(path);
+            }
+
+        }
+
         Button camera = (Button) findViewById(R.id.btn_camera);
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                intent.setType("image/*");
+
                 startActivityForResult(intent, RC_GET_IMAGE);
             }
         });
@@ -84,7 +101,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
     }
 
     public void setNewPassword() {
-        /*내 정보 수정인지 패스워드 수정인지 Intent putExtra값으로 비교 한 후 분기별로 처리 */
+        /* 내 정보 수정인지 패스워드 수정인지 Intent putExtra값으로 비교 한 후 분기별로 처리 */
 
         currentPassword = recentlyPassword.getText().toString();
         newPassword = nowPassword.getText().toString();
@@ -92,16 +109,28 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
         String password = PropertyManager.getInstance().getUserPassword();
 
-        if(password.equals(currentPassword)) {
-            if(!newPassword.equals(againPassword)) {
+        if (password.equals(currentPassword)) {
+            if (!newPassword.equals(againPassword)) {
                 Toast.makeText(UpdateProfileActivity.this, "패스워드를 다시 입력해주세요", Toast.LENGTH_SHORT).show();
-            }else {
+            } else {
                 /* 패스워드 수정 API */
 
             }
-        }else {
+        } else {
             Toast.makeText(UpdateProfileActivity.this, "패스워드가 다릅니다", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private Uri getTempUri() {
+        /* 외장메모리 경로 */
+        uploadFile = new File(Environment.getExternalStorageDirectory(), "File_" + System.currentTimeMillis() / 1000);
+
+        try {
+            uploadFile.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return Uri.fromFile(uploadFile);
     }
 
     File uploadFile = null;
@@ -111,30 +140,31 @@ public class UpdateProfileActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_GET_IMAGE) {
             if (resultCode == Activity.RESULT_OK) {
-                Uri uri = data.getData();
-                Cursor c = getContentResolver().query(uri, new String[]{MediaStore.Images.Media.DATA}, null, null, null);
-
-                if (c.moveToNext()) {
-
-                    String path = c.getString(c.getColumnIndex(MediaStore.Images.Media.DATA));
-                    uploadFile = new File(path);
-
-                    intent = new Intent("com.android.camera.action.CROP");
-                    intent.setType(path);
-                    intent.putExtra("outputX", 90);
-                    intent.putExtra("outputY", 90);
-                    intent.putExtra("aspectX", 1);
-                    intent.putExtra("aspectY", 1);
-                    intent.putExtra("scale", true);
-                    intent.putExtra("return-data", true);
-                    startActivityForResult(intent, RC_CROP_IMAGE);
-
-                    Glide.with(userProfileImage.getContext())
-                            .load(uploadFile)
-                            .into(userProfileImage);
-                }
+                uri = data.getData();
+                imageCrop(uri);
+            }
+        } else if (requestCode == CROP_IMAGE) {
+            if (resultCode == Activity.RESULT_OK) {
+                Glide.with(this).load(uploadFile.getAbsolutePath()).bitmapTransform(new CropCircleTransformation(this)).into(userProfileImage);
             }
         }
+    }
+
+    public void imageCrop(Uri uri) {
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+
+        intent.putExtra("crop", "true");
+        intent.putExtra("outputX", 90);
+        intent.putExtra("outputY", 90);
+        intent.putExtra("scale", true);
+
+        /* MediaStore.EXTRA_OUTPUT : 확인버튼을 누름 -> crop기능 활성화 */
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, getTempUri());
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+
+        startActivityForResult(intent, CROP_IMAGE);
+
     }
 
     private void finishNoPermission() {
@@ -183,6 +213,14 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 return;
             }
             requestPermission();
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        if (uploadFile != null) {
+            outState.putString("filename", uploadFile.getAbsolutePath());
         }
     }
 }

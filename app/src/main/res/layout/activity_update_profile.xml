@@ -3,14 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_update_profile"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
     tools:context="com.bread.hwang.bread.mypage.UpdateProfileActivity">
 
         <LinearLayout
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="10dp"
             android:id="@+id/linear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:orientation="horizontal">
 
             <ImageView
@@ -20,52 +23,34 @@
                 android:src="@drawable/default_bread" />
 
             <Button
-                android:layout_marginLeft="20dp"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:background="@drawable/btn_camera"
+                android:layout_marginLeft="15dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:gravity="bottom|center_vertical|center_horizontal"
                 android:id="@+id/btn_camera" />
         </LinearLayout>
 
-        <LinearLayout
-            android:gravity="center"
-            android:layout_below="@+id/linear"
-            android:id="@+id/linear_two"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/edit_username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/image_user_profile"
-                android:layout_marginTop="10dp"
-                android:text="BreadWriter"
-                android:textSize="20sp" />
-
-            <ImageButton
-                android:layout_marginLeft="20dp"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@android:drawable/ic_menu_search" />
-        </LinearLayout>
-
     <TextView
+        android:layout_marginBottom="10dp"
+        android:textStyle="bold"
+        android:background="@drawable/shape_stroke_square"
         android:gravity="center"
         android:id="@+id/text_userid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
         android:layout_marginTop="25dp"
         android:text="bread1234"
         android:textSize="20sp"
-        android:layout_marginLeft="117dp"
-        android:layout_marginStart="117dp"
-        android:layout_below="@+id/linear_two"
+        android:layout_marginLeft="100dp"
+        android:layout_marginStart="100dp"
+        android:layout_below="@+id/edit_username"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <TextView
+        android:textColor="@android:color/black"
+        android:background="@drawable/shape_stroke_square"
         android:gravity="center"
         android:textSize="20sp"
         android:text="Update Password"
@@ -73,91 +58,148 @@
         android:layout_below="@+id/text_userid"
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="30dp" />
 
     <LinearLayout
         android:gravity="center"
         android:orientation="vertical"
         android:layout_below="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="150dp">
+
         <LinearLayout
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
             android:id="@+id/linear_recently"
             android:gravity="center"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_below="@+id/textView"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true">
+
             <TextView
+                android:textStyle="bold"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/shape_stroke_square"
                 android:gravity="center"
-                android:textSize="15sp"
+                android:textSize="10sp"
                 android:text="Recently Password"
                 android:layout_weight="2"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent" />
+
             <EditText
+                android:textColorHint="@color/colorAccent"
+                android:background="@drawable/shape_stroke_square"
                 android:gravity="center"
                 android:hint="Enter...."
                 android:id="@+id/edit_recentlyPassword"
                 android:layout_weight="7"
                 android:inputType="number"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent" />
         </LinearLayout>
+
         <LinearLayout
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
             android:id="@+id/linear_new"
             android:gravity="center"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_below="@+id/linear_recently"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true">
+
             <TextView
+                android:textStyle="bold"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/shape_stroke_square"
                 android:gravity="center"
-                android:textSize="15sp"
+                android:textSize="10sp"
                 android:text="New Password"
                 android:layout_weight="2"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent" />
+
             <EditText
+                android:textColorHint="@color/colorAccent"
+                android:background="@drawable/shape_stroke_square"
                 android:gravity="center"
                 android:hint="Enter...."
                 android:inputType="number"
                 android:id="@+id/edit_newPassword"
                 android:layout_weight="7"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent" />
         </LinearLayout>
+
         <LinearLayout
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
             android:gravity="center"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_below="@+id/linear_new"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true">
+
             <TextView
+                android:textStyle="bold"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/shape_stroke_square"
                 android:gravity="center"
-                android:textSize="15sp"
+                android:textSize="10sp"
                 android:text="Recently Password"
                 android:layout_weight="2"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent" />
+
             <EditText
+                android:textColorHint="@color/colorAccent"
+                android:background="@drawable/shape_stroke_square"
                 android:gravity="center"
                 android:inputType="number"
                 android:hint="Enter...."
                 android:id="@+id/edit_morePassword"
                 android:layout_weight="7"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent" />
         </LinearLayout>
+
     </LinearLayout>
 
+        <EditText
+            android:gravity="center"
+            android:layout_marginLeft="100dp"
+            android:layout_marginStart="100dp"
+            android:background="@drawable/shape_stroke_square"
+            android:layout_below="@+id/linear"
+            android:id="@+id/edit_username"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:text="BreadWriter"
+            android:textStyle="bold"
+            android:textSize="20sp" />
+
+        <ImageButton
+            android:layout_below="@+id/linear"
+            android:layout_toRightOf="@+id/edit_username"
+            android:background="@drawable/default_pencil"
+            android:layout_marginLeft="20dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+
     <Button
+        android:background="@drawable/btn_set"
         android:text="set"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -167,6 +209,7 @@
         android:id="@+id/btn_set" />
 
     <Button
+        android:background="@drawable/btn_cancel"
         android:text="Cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -174,6 +217,4 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:id="@+id/btn_cancel" />
-
-
 </RelativeLayout>

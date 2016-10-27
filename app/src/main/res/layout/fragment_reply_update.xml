@@ -6,8 +6,9 @@
 
 
     <LinearLayout
+        android:layout_marginLeft="5dp"
         android:id="@id/linear"
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -16,22 +17,26 @@
 
         <ImageView
             android:id="@+id/image_reply_profile"
-            android:layout_width="50dp"
+            android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_toEndOf="@+id/text_reply_username"
             android:layout_toRightOf="@+id/text_reply_username"
-            android:background="@drawable/default_bread" />
+            android:background="@drawable/default_user_profile" />
 
         <TextView
+            android:textStyle="bold"
+           android:textSize="15sp"
             android:id="@+id/text_reply_username"
-            android:layout_width="50dp"
+            android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_below="@+id/image_profile"
-            android:text="bread" />
+            android:text="bread"
+            android:gravity="center" />
     </LinearLayout>
 
 
     <Button
+        android:background="@drawable/btn_reply_set"
         android:text="send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,6 +46,14 @@
         android:id="@+id/btn_send" />
 
     <EditText
+        android:textSize="18sp"
+        android:textColorHint="@color/colorAccent"
+        android:paddingLeft="10dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/shape_stroke_square"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
@@ -49,6 +62,11 @@
         android:layout_toLeftOf="@+id/btn_send"
         android:layout_alignBottom="@+id/btn_send"
         android:hint="ReplyContent..."
-        android:layout_width="160dp" />
+        android:layout_width="230dp" />
 
+    <ImageView
+        android:background="@drawable/shape_stroke_line"
+        android:layout_below="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </RelativeLayout>

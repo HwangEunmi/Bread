@@ -4,10 +4,6 @@
     android:id="@+id/activity_board_write"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.bread.hwang.bread.board.BoardWriteActivity">
 
     <include
@@ -15,108 +11,132 @@
         layout="@layout/view_toolbar"></include>
 
     <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/toolbar_board_write"
-        android:orientation="horizontal"
         android:id="@+id/linear"
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="60dp"
+        android:layout_below="@+id/toolbar_board_write"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
         <TextView
             android:id="@+id/text_alarm"
-            android:textColor="@color/colorAccent"
-            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="30dp"
+            android:gravity="center"
             android:text="You have to write to here three things"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textColor="@color/colorAccent"
+            android:textSize="15sp" />
+
         <ImageView
-            android:layout_marginLeft="50dp"
-            android:src="@drawable/default_bread"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/text_alarm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:src="@drawable/default_logo" />
+
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linear_two"
-        android:layout_below="@+id/linear"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:src="@drawable/default_bread"
-            android:id="@+id/image_user_profile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
+        android:layout_height="30dp"
+        android:layout_below="@+id/linear"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape_stroke_square"
+        android:orientation="horizontal">
 
-            android:layout_toRightOf = "@+id/image_user_profile"
-            android:textSize="20sp"
-            android:text="bread"
+        <ImageView
+            android:id="@+id/image_user_profile"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/default_user_profile" />
+
+        <TextView
+            android:id="@+id/text_username"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/image_user_profile"
+            android:background="@drawable/shape_stroke_square"
             android:gravity="center_vertical|center"
-            android:id="@+id/text_username" />
+            android:text="Writer"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
     </LinearLayout>
 
-
     <Button
-        android:text="cancel"
+        android:background="@drawable/btn_cancel"
+        android:id="@+id/btn_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/btn_set"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="19dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/btn_set"
         android:layout_marginEnd="19dp"
-        android:id="@+id/btn_cancel" />
+        android:layout_marginRight="19dp"
+        android:text="cancel" />
 
     <Button
-        android:text="set"
+        android:background="@drawable/btn_set"
+        android:id="@+id/btn_set"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="48dp"
-        android:layout_marginStart="48dp"
-        android:id="@+id/btn_set"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="48dp"
+        android:layout_marginStart="48dp"
+        android:text="set" />
 
     <TextView
-        android:text="content content"
         android:id="@+id/text_content"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_below="@+id/linear_two"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/linear_two"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:text="content content"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp" />
 
     <LinearLayout
-        android:orientation="horizontal"
         android:id="@+id/linear_three"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_below="@+id/text_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/text_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
         <ImageView
             android:id="@+id/image_one"
-            android:src="@drawable/default_photo"
-            android:layout_weight="1.00"
             android:layout_width="0dp"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_weight="1.00"
+            android:background="@drawable/shape_stroke_square"
+            android:src="@drawable/default_photo" />
+
         <ImageView
-            android:layout_toRightOf="@+id/image_one"
             android:id="@+id/image_two"
-            android:src="@drawable/default_photo"
-            android:layout_weight="1.00"
             android:layout_width="0dp"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/image_one"
+            android:layout_weight="1.00"
+            android:background="@drawable/shape_stroke_square"
+            android:src="@drawable/default_photo" />
+
         <ImageView
-            android:layout_toRightOf="@+id/image_two"
-            android:src="@drawable/default_photo"
             android:id="@+id/image_three"
-            android:layout_weight="1.00"
             android:layout_width="0dp"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/image_two"
+            android:layout_weight="1.00"
+            android:background="@drawable/shape_stroke_square"
+            android:src="@drawable/default_photo" />
     </LinearLayout>
 </RelativeLayout>
