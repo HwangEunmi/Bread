@@ -244,8 +244,8 @@ public class BoardWriteActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_main, menu);
-        return super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.actionbar_cancel, menu);
+        return true;
     }
 
     @Override
@@ -253,7 +253,7 @@ public class BoardWriteActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.menu_cancel) {
             finish();
         }
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

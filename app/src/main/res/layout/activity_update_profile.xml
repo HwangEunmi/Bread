@@ -7,7 +7,12 @@
     android:background="@android:color/white"
     tools:context="com.bread.hwang.bread.mypage.UpdateProfileActivity">
 
-        <LinearLayout
+    <include
+        android:id="@+id/toolbar_update_profile"
+        layout="@layout/view_toolbar"></include>
+
+    <LinearLayout
+        android:layout_below="@+id/toolbar_update_profile"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="100dp"
             android:layout_marginTop="10dp"

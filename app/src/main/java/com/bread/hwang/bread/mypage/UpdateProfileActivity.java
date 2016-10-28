@@ -18,6 +18,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.webkit.WebView;
@@ -43,7 +44,8 @@ public class UpdateProfileActivity extends AppCompatActivity {
     Intent intent;
     EditText userName, recentlyPassword, nowPassword, morePassword;
     ImageView userProfileImage;
-
+    Toolbar toolbar;
+    TextView toolbarTitle;
     String currentPassword, newPassword, againPassword;
 
     private static final int RC_GET_IMAGE = 100;
@@ -56,6 +58,12 @@ public class UpdateProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_profile);
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbarTitle = (TextView)findViewById(R.id.text_toolbar_title);
+        toolbarTitle.setText("회원정보 수정화면");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         userName = (EditText) findViewById(R.id.edit_username);
         recentlyPassword = (EditText) findViewById(R.id.edit_recentlyPassword);
         nowPassword = (EditText) findViewById(R.id.edit_newPassword);

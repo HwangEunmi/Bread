@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.InputFilter;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -19,6 +22,7 @@ import com.bread.hwang.bread.adapter.BoardSearchAdapter;
 import com.bread.hwang.bread.adapter.BoardSearchSpinnerAdapter;
 import com.bread.hwang.bread.data.Board;
 import com.bread.hwang.bread.data.User;
+import com.bread.hwang.bread.util.DateCalculator;
 import com.bread.hwang.bread.view.BoardSearchViewHolder;
 
 public class BoardSearchActivity extends AppCompatActivity {
@@ -66,6 +70,7 @@ public class BoardSearchActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(String query) {
                 mAdapter.clear();
                 initData();
+                setSearchResult();
                 return false;
             }
 
@@ -99,6 +104,13 @@ public class BoardSearchActivity extends AppCompatActivity {
         initSpinner();
     }
 
+    /* 키워드가 날짜일때 검색 */
+    public void setSearchResult() {
+        DateCalculator dateCalculator = new DateCalculator();
+
+        String searchResult = ""+ searchView.getQuery();
+    }
+
     private void initData() {
         for (int i = 0; i < 20; i++) {
             Board board = new Board();
@@ -120,7 +132,20 @@ public class BoardSearchActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        intent = new Intent(BoardSearchActivity.this, MainActivity.class);
-        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.actionbar_cancel, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.menu_cancel) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

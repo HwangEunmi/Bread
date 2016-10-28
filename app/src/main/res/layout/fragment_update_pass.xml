@@ -1,0 +1,50 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="com.bread.hwang.bread.mypage.UpdatePassFragment">
+
+
+    <Button
+        android:id="@+id/btn_send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/edit_two"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="28dp"
+        android:text="send" />
+
+    <EditText
+        android:id="@+id/edit_two"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Once again..."
+        android:inputType="textPassword"
+        android:layout_below="@+id/edit_one"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:id="@+id/edit_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:ems="10"
+        android:hint="Enter your password"
+        android:inputType="textPassword"
+        android:layout_below="@+id/edit_pass"
+        android:layout_alignLeft="@+id/edit_two"
+        android:layout_alignStart="@+id/edit_two" />
+
+    <EditText
+        android:hint="Current Password..."
+        android:id="@+id/edit_pass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/edit_one"
+        android:layout_alignStart="@+id/edit_one" />
+</RelativeLayout>

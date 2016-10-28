@@ -4,17 +4,12 @@
     android:layout_height="wrap_content"
     tools:context="com.bread.hwang.bread.mypage.MyPageFragment">
 
-    <include
-        android:id="@+id/toolbar_mypage"
-        layout="@layout/view_toolbar"></include>
-
     <ImageView
         android:id="@+id/image_logo"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/toolbar_mypage"
         android:layout_marginTop="5dp"
         android:src="@drawable/default_logo" />
 
@@ -62,7 +57,7 @@
         android:background="@drawable/shape_stroke_square"
         android:id="@+id/linear_two"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="100dp"
         android:layout_below="@+id/linear"
         android:layout_marginTop="20dp"
         android:gravity="center"
@@ -80,7 +75,7 @@
             android:gravity="center"
             android:background="@drawable/shape_stroke_square"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="60dp"
             android:layout_below="@id/textView"
             android:orientation="horizontal">
 

@@ -8,17 +8,20 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bread.hwang.bread.MyApplication;
@@ -47,6 +50,9 @@ public class BoardDetailActivity extends AppCompatActivity {
     EditText replyEdit;
     ImageButton replyUpdate, replyDelete;
     AlertDialog dialog;
+    Toolbar toolbar;
+    TextView toolbarTitle;
+
     int position;
     String tempReply;
 
@@ -56,6 +62,11 @@ public class BoardDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board_detail);
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbarTitle = (TextView)findViewById(R.id.text_toolbar_title);
+        toolbarTitle.setText("게시물 상세 화면");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 //        Bundle bundle = new Bundle();
 //        bundle.getBundle("replydata");
@@ -97,9 +108,9 @@ public class BoardDetailActivity extends AppCompatActivity {
         replyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                int count;
-//                count = mAdapter.getCount() + 1;
+
                 String replyText = replyEdit.getText().toString();
+                replyEdit.setTag("");
 
                 Reply reply = new Reply();
                 User user = new User();
@@ -108,7 +119,7 @@ public class BoardDetailActivity extends AppCompatActivity {
                 reply.setUserNumber(user);
                 reply.setRegDate("2016.10.1");
                 reply.setContent(replyText);
-                //   mAdapter.clear();
+
                 mAdapter.add(reply);
             }
         });
@@ -142,7 +153,7 @@ public class BoardDetailActivity extends AppCompatActivity {
         /* 나중에 false로 바꾸기(네트워크 할때)*/
         updateMenuItem.setVisible(true);
         deleteMenuItem.setVisible(true);
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
 
     @Override
@@ -154,7 +165,7 @@ public class BoardDetailActivity extends AppCompatActivity {
             /* 게시물 삭제 */
             Toast.makeText(BoardDetailActivity.this, "삭제합니다", Toast.LENGTH_SHORT).show();
         }
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 
     /* 수정/삭제 메뉴 자기 게시글에만 보이게 */

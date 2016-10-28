@@ -91,14 +91,6 @@ public class MembershipActivity extends AppCompatActivity {
             public void onClick(View v) {
                 setNotMatchPassword(v);
 
-                /* 회원가입에선 필요없는듯 (again) */
-//                String userId = idText.getText().toString();
-//                PropertyManager.getInstance().setUserId(userId);
-//                String userName = nameText.getText().toString();
-//                PropertyManager.getInstance().setUserName(userName);
-//                String userPass = passText.getText().toString();
-//                PropertyManager.getInstance().setUserPassword(userPass);
-
                 finish();
             }
         });
@@ -107,8 +99,6 @@ public class MembershipActivity extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                intent = new Intent(MembershipActivity.this, LoginActivity.class);
-//                startActivity(intent);
                 finish();
             }
         });
