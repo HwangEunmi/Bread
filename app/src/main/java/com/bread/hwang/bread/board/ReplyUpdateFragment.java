@@ -2,6 +2,7 @@ package com.bread.hwang.bread.board;
 
 
 import android.app.Dialog;
+import android.app.VoiceInteractor;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -43,7 +44,6 @@ public class ReplyUpdateFragment extends DialogFragment {
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,16 +55,15 @@ public class ReplyUpdateFragment extends DialogFragment {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                ReplyUpdateFragment fragment = new ReplyUpdateFragment();
-//                Bundle bundle = new Bundle();
-//                bundle.putString(TAG_REPLY_UPDATE, replyContent);
-//                fragment.setArguments(bundle);
-                int position = (Integer)v.getTag();
+                Bundle bundle = getArguments();
+                int position = bundle.getInt("position");
+
                 Reply reply = new Reply();
                 replyContent = editContent.getText().toString();
                 reply.setContent(replyContent);
-                BoardDetailActivity activity = ((BoardDetailActivity)getActivity());
-                activity.getReplyUpdateList(position, replyContent);
+
+                BoardDetailActivity activity = ((BoardDetailActivity) getActivity());
+                activity.setTempReply(position, replyContent);
 
                 getDialog().dismiss();
             }

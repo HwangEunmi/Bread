@@ -48,7 +48,7 @@ public class BoardDetailActivity extends AppCompatActivity {
     ImageButton replyUpdate, replyDelete;
     AlertDialog dialog;
     int position;
-    String updateContent;
+    String tempReply;
 
     private static final String TAG_REPLY_UPDATE = "replyupdate";
 
@@ -56,6 +56,10 @@ public class BoardDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board_detail);
+
+//        Bundle bundle = new Bundle();
+//        bundle.getBundle("replydata");
+//        Toast.makeText(BoardDetailActivity.this, "replydata" + replyDelete, Toast.LENGTH_SHORT).show();
 
         View replyList = getLayoutInflater().inflate(R.layout.view_detail_reply, null);
         replyUpdate = (ImageButton) replyList.findViewById(R.id.btn_reply_update);
@@ -72,18 +76,20 @@ public class BoardDetailActivity extends AppCompatActivity {
         mAdapter.setOnAdapterBoardReplyDeleteClickListener(new BoardDetailReplyAdapter.OnAdapterBoardReplyDeleteClickListener() {
             @Override
             public void onAdapterBoardReplyDeleteClick(BoardDetailReplyAdapter adapter, BoardDetailReplyViewHolder view, Reply reply) {
-                position = (Integer)view.getTag();
+                position = (Integer) view.getTag();
                 getReplyDeleteList(position, reply);
+
             }
         });
 
         mAdapter.setOnAdapterBoardReplyUpdateClickListener(new BoardDetailReplyAdapter.OnAdapterBoardReplyUpdateClickListener() {
             @Override
             public void onAdapterBoardReplyUpdateClick(BoardDetailReplyAdapter adapter, BoardDetailReplyViewHolder view, Reply reply) {
-                position = (Integer)view.getTag();
-
+                position = (Integer) view.getTag();
+                getReplyUpdateList(position, tempReply);
             }
         });
+
 
         replyEdit = (EditText) findViewById(R.id.edit_comment);
 
@@ -165,21 +171,27 @@ public class BoardDetailActivity extends AppCompatActivity {
 //        deleteMenuItem.setVisible(false);
     }
 
-    public void getReplyUpdateList(int position, String content) {
-        FragmentManager fm = getSupportFragmentManager();
-        ReplyUpdateFragment dialog = new ReplyUpdateFragment();
-
+    public void setTempReply(int position, String content) {
         int count = mAdapter.getCount();
 
         if (count > 0) {
-            intent = getIntent();
-           // reply.setContent(updateContent);
-//            Toast.makeText(BoardDetailActivity.this, "replyData:" + reply.getContent(), Toast.LENGTH_SHORT).show();
-//            mAdapter.set(position, reply);
-        }
+            Reply reply = new Reply();
+            reply.setContent(content);
 
-        /* Bundle로 boardid등 넘기기*/
+            mAdapter.set(position, reply);
+        }
+    }
+
+    public void getReplyUpdateList(int position, String content) {
+        FragmentManager fm = getSupportFragmentManager();
+        ReplyUpdateFragment dialog = new ReplyUpdateFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("position", position);
+        dialog.setArguments(bundle);
         dialog.show(fm, "commentdialog");
+
+        setTempReply(position, content);
+         /* Bundle로 boardid등 넘기기*/
 
     }
 
