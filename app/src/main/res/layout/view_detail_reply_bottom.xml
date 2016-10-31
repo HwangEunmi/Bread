@@ -55,6 +55,7 @@
                 android:hint="Enter your Comment..." />
 
             <Button
+                android:background="@drawable/btn_reply_set"
                 android:layout_marginLeft="60dp"
                 android:id="@+id/btn_set"
                 android:layout_width="0dp"

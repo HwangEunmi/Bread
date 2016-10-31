@@ -23,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,10 +40,10 @@ public class BoardWriteActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     TextView toolbarTitle;
-
+    EditText editContent;
     Intent intent;
     ImageView imageOne, imageTwo, imageThree, userProfile;
-    TextView content, userName;
+    TextView userName;
 
     private static final int RC_GET_ONE_IMAGE = 100;
     private static final int RC_GET_TWO_IMAGE = 200;
@@ -64,7 +65,7 @@ public class BoardWriteActivity extends AppCompatActivity {
         imageTwo = (ImageView) findViewById(R.id.image_two);
         imageThree = (ImageView) findViewById(R.id.image_three);
         userProfile = (ImageView) findViewById(R.id.image_user_profile);
-        content = (TextView) findViewById(R.id.text_content);
+        editContent = (EditText)findViewById(R.id.edit_content);
         userName = (TextView) findViewById(R.id.text_username);
 
 

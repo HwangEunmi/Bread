@@ -90,8 +90,10 @@
         android:layout_marginStart="48dp"
         android:text="set" />
 
-    <TextView
-        android:id="@+id/text_content"
+    <EditText
+        android:textColorHint="@color/colorAccent"
+        android:hint="content content"
+        android:id="@+id/edit_content"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_alignParentLeft="true"
@@ -99,7 +101,6 @@
         android:layout_below="@+id/linear_two"
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
-        android:text="content content"
         android:textColor="@color/colorAccent"
         android:textSize="20sp" />
 
@@ -109,7 +110,7 @@
         android:layout_height="100dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/text_content"
+        android:layout_below="@+id/edit_content"
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
