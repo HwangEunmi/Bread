@@ -3,6 +3,7 @@ package com.bread.hwang.bread.request;
 import android.content.Context;
 
 import com.bread.hwang.bread.data.Board;
+import com.bread.hwang.bread.data.Data;
 import com.bread.hwang.bread.data.NetworkResult;
 import com.bread.hwang.bread.data.User;
 import com.google.gson.reflect.TypeToken;
@@ -18,7 +19,7 @@ import okhttp3.RequestBody;
  * Created by Hwang on 2016-10-31.
  */
 
-public class LoginRequest extends AbstractRequest<NetworkResult<User>> {
+public class LoginRequest extends AbstractRequest<NetworkResult<Data>> {
     Request mRequest;
 
     public LoginRequest(Context context, String userId, String userPass) {

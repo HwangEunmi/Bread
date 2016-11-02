@@ -3,6 +3,7 @@ package com.bread.hwang.bread.request;
 import android.content.Context;
 
 import com.bread.hwang.bread.data.Board;
+import com.bread.hwang.bread.data.Data;
 import com.bread.hwang.bread.data.NetworkResult;
 import com.bread.hwang.bread.data.Reply;
 import com.google.gson.reflect.TypeToken;
@@ -17,7 +18,7 @@ import okhttp3.Request;
  * Created by Hwang on 2016-10-31.
  */
 
-public class DeleteReplyRequest extends AbstractRequest<NetworkResult<Reply>> {
+public class DeleteReplyRequest extends AbstractRequest<NetworkResult<Data>> {
     Request mRequest;
 
     public DeleteReplyRequest(Context context, int boardNum, int replyNum) {

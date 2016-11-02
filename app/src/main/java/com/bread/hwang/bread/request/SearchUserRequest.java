@@ -5,6 +5,7 @@ import android.content.Context;
 import com.bread.hwang.bread.data.Board;
 import com.bread.hwang.bread.data.NetworkResult;
 import com.bread.hwang.bread.data.User;
+import com.bread.hwang.bread.data.UserData;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -16,7 +17,7 @@ import okhttp3.Request;
  * Created by Hwang on 2016-10-31.
  */
 
-public class SearchUserRequest extends AbstractRequest<NetworkResult<User>> {
+public class SearchUserRequest extends AbstractRequest<NetworkResult<UserData>> {
     Request mRequest;
 
     public SearchUserRequest(Context context, int userNum) {

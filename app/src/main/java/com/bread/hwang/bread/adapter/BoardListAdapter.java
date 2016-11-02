@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.bread.hwang.bread.data.Board;
+import com.bread.hwang.bread.data.BoardData;
 import com.bread.hwang.bread.view.BoardListViewHolder;
 
 import java.util.ArrayList;
@@ -15,14 +16,14 @@ import java.util.List;
  */
 
 public class BoardListAdapter extends BaseAdapter implements BoardListViewHolder.OnBoardItemClickListener {
-    List<Board> items = new ArrayList<>();
+    List<BoardData> items = new ArrayList<>();
 
-    public void add(Board data) {
+    public void add(BoardData data) {
         items.add(data);
         notifyDataSetChanged();
     }
 
-    public void addAll(List<Board> items) {
+    public void addAll(List<BoardData> items) {
         this.items.addAll(items);
         notifyDataSetChanged();
     }
@@ -54,10 +55,12 @@ public class BoardListAdapter extends BaseAdapter implements BoardListViewHolder
             view = new BoardListViewHolder(parent.getContext());
 
             view.setOnBoardItemClickListener(this);
+            view.setTag(position);
         } else {
             view = (BoardListViewHolder) convertView;
+            view.setTag(position);
         }
-        view.setBoardList(items.get(position));
+        view.setBoardList(items.get(position).getData());
 
         return view;
     }

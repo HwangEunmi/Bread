@@ -24,12 +24,7 @@ import com.bread.hwang.bread.manager.PropertyManager;
  * A simple {@link Fragment} subclass.
  */
 public class MyPageFragment extends DialogFragment {
-    /* 비밀번호 수정하는 api도 없어? 그럼 그냥 비번 확인API로 비번 맞는지 확인받고
-    * 회원수정API저기다가 비번 넣어서 수정해야될 듯*/
-    /* 저 API없으면 그냥 로그인할때 SharedPreference에다가 id, name(nickname), pass) 받아와서 넣어야할듯.. */
 
-    /* 로그아웃API, 회원탈퇴API, 회원조회API */
-     /* 일단 로그아웃, 탈퇴하면 바로 Splash화면으로 이동(Dialog 확인창 이런건 나중에 구현) */
     Intent intent;
     TextView updateText, passUpdateText;
     AlertDialog dialog;

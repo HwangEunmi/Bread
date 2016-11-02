@@ -33,6 +33,7 @@ public class ReplyUpdateFragment extends DialogFragment {
     EditText editContent;
     Button sendButton;
     String replyContent;
+    int position, boardNum;
 
     private static final String TAG_REPLY_UPDATE = "replyupdate";
 
@@ -40,7 +41,12 @@ public class ReplyUpdateFragment extends DialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /*Bundle 값 받기 (id같은거) */
+        Bundle bundle = getArguments();
+        position = bundle.getInt("position");
+        boardNum = bundle.getInt("boardNum");
+
+        Toast.makeText(getContext(), "boardNum"+boardNum, Toast.LENGTH_SHORT).show();
+
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
@@ -55,8 +61,6 @@ public class ReplyUpdateFragment extends DialogFragment {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = getArguments();
-                int position = bundle.getInt("position");
 
                 Reply reply = new Reply();
                 replyContent = editContent.getText().toString();

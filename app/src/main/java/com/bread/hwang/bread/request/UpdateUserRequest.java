@@ -5,6 +5,7 @@ import android.content.IntentFilter;
 
 import com.bread.hwang.bread.R;
 import com.bread.hwang.bread.data.Board;
+import com.bread.hwang.bread.data.Data;
 import com.bread.hwang.bread.data.NetworkResult;
 import com.bread.hwang.bread.data.User;
 import com.google.gson.reflect.TypeToken;
@@ -23,7 +24,7 @@ import okhttp3.RequestBody;
  * Created by Hwang on 2016-10-31.
  */
 
-class UpdateUserRequest extends AbstractRequest<NetworkResult<User>> {
+class UpdateUserRequest extends AbstractRequest<NetworkResult<Data>> {
     MediaType image = MediaType.parse("image/*");
     Request mRequest;
 

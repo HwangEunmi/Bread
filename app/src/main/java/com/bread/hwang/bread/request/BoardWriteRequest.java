@@ -3,6 +3,7 @@ package com.bread.hwang.bread.request;
 import android.content.Context;
 
 import com.bread.hwang.bread.data.Board;
+import com.bread.hwang.bread.data.Data;
 import com.bread.hwang.bread.data.NetworkResult;
 import com.google.gson.reflect.TypeToken;
 
@@ -21,7 +22,7 @@ import okhttp3.RequestBody;
  * Created by Hwang on 2016-10-31.
  */
 
-public class BoardWriteRequest extends AbstractRequest<NetworkResult<Board>> {
+public class BoardWriteRequest extends AbstractRequest<NetworkResult<Data>> {
     MediaType image = MediaType.parse("image/*");
     Request mRequest;
 
@@ -51,7 +52,7 @@ public class BoardWriteRequest extends AbstractRequest<NetworkResult<Board>> {
                 .addFormDataPart("boardContent", boardContent);
 
         if (files != null) {
-            for (int i = 0; i < files.size(); i++) {
+            for (int i = 0; i < 3; i++) {
                 builder.addFormDataPart("files", files.get(i).getName(),
                         RequestBody.create(image, files.get(i)));
             }

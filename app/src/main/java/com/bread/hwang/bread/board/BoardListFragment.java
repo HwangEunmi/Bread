@@ -1,6 +1,7 @@
 package com.bread.hwang.bread.board;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,25 +14,39 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.bread.hwang.bread.MainActivity;
 import com.bread.hwang.bread.R;
 import com.bread.hwang.bread.adapter.BoardListAdapter;
 import com.bread.hwang.bread.data.Board;
+import com.bread.hwang.bread.data.BoardData;
+import com.bread.hwang.bread.data.NetworkResult;
 import com.bread.hwang.bread.data.User;
+import com.bread.hwang.bread.manager.NetworkManager;
+import com.bread.hwang.bread.manager.NetworkRequest;
+import com.bread.hwang.bread.request.BoardListSearchRequest;
+import com.bread.hwang.bread.request.BoardWriteRequest;
 import com.bread.hwang.bread.view.BoardListViewHolder;
 import com.bumptech.glide.Glide;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class BoardListFragment extends Fragment {
-  /* 게시글 리스트 화면 */
-    /* 게시물 목록(+검색)API */
+/* boardNum, */
 
     Intent intent;
     BoardListAdapter mAdapter;
     GridView gridView;
+    int boardNum;
+    int position;
+    int realBoardNum;
+
+    private static final int BOARD_NUM_REQUEST_CODE = 100;
+    private static final String TAG_SEARCH_TYPE = "searchtype";
 
     public BoardListFragment() {
         // Required empty public constructor
@@ -42,48 +57,53 @@ public class BoardListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_board_list, container, false);
         gridView = (GridView) view.findViewById(R.id.gridView);
 
+        Toast.makeText(getContext(), "boardnum : " + boardNum, Toast.LENGTH_SHORT).show();
+
         FloatingActionButton fb = (FloatingActionButton) view.findViewById(R.id.floating);
         fb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 intent = new Intent(getContext(), BoardWriteActivity.class);
-                startActivity(intent);
+                intent.putExtra(TAG_SEARCH_TYPE, 1);
+                intent.putExtra("boardnum", realBoardNum);
+                startActivityForResult(intent, BOARD_NUM_REQUEST_CODE);
+
             }
         });
 
         mAdapter = new BoardListAdapter();
         gridView.setAdapter(mAdapter);
+
+        String lastBoardNum = "lastBoardNum";
+        BoardListSearchRequest listRequest = new BoardListSearchRequest(getContext(), 10, lastBoardNum);
+        NetworkManager.getInstance().getNetworkData(listRequest, new NetworkManager.OnResultListener<NetworkResult<List<BoardData>>>() {
+            @Override
+            public void onSuccess(NetworkRequest<NetworkResult<List<BoardData>>> request, NetworkResult<List<BoardData>> result) {
+                List<BoardData> board = result.getResult();
+                mAdapter.clear();
+                mAdapter.addAll(board);
+            }
+
+            @Override
+            public void onFail(NetworkRequest<NetworkResult<List<BoardData>>> request, int errorCode, String errorMessage, Throwable exception) {
+
+            }
+        });
+
         mAdapter.setOnAdapterImageClickListener(new BoardListAdapter.OnAdapterImageClickListener() {
             @Override
             public void onAdapterImageClick(BoardListAdapter adapter, BoardListViewHolder view, Board board) {
+                position = (Integer)view.getTag();
+                realBoardNum = board.getNumber();
+
                 intent = new Intent(getContext(), BoardDetailActivity.class);
+                intent.putExtra("position", position);
+                intent.putExtra("boardnum", realBoardNum);
                 startActivity(intent);
             }
         });
 
-        initData();
-
         return view;
-    }
-
-    private void initData() {
-
-        for (int i = 0; i < 20; i++) {
-            Board b = new Board();
-            User user = new User();
-            user.setNickname("빵");
-           // user.setImagePath(getResources().getDrawable(R.drawable.default_user_profile).toString());
-           // b.setImagePath("PreView");
-            b.setUserNumber(user);
-            b.setContent("hi hi hello hi hello ");
-            b.setAudioCount(1);
-            b.setImageCount(1);
-            b.setVideoCount(1);
-            b.setReplyCount(1);
-            b.setFileCount(b.getAudioCount(),b.getImageCount(), b.getVideoCount());
-            b.setRegDate("2016.10.11");
-            mAdapter.add(b);
-        }
     }
 
     @Override
@@ -100,5 +120,34 @@ public class BoardListFragment extends Fragment {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == BOARD_NUM_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            boardNum = data.getIntExtra("num", 1);
+            Toast.makeText(getContext(), "boardnum:" + boardNum, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        String lastBoardNum = "lastBoardNum";
+        BoardListSearchRequest listRequest = new BoardListSearchRequest(getContext(), 10, lastBoardNum);
+        NetworkManager.getInstance().getNetworkData(listRequest, new NetworkManager.OnResultListener<NetworkResult<List<BoardData>>>() {
+            @Override
+            public void onSuccess(NetworkRequest<NetworkResult<List<BoardData>>> request, NetworkResult<List<BoardData>> result) {
+                List<BoardData> board = result.getResult();
+                mAdapter.clear();
+                mAdapter.addAll(board);
+            }
+
+            @Override
+            public void onFail(NetworkRequest<NetworkResult<List<BoardData>>> request, int errorCode, String errorMessage, Throwable exception) {
+
+            }
+        });
     }
 }

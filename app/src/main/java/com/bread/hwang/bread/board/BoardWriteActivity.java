@@ -14,6 +14,8 @@ import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,15 +30,27 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bread.hwang.bread.MainActivity;
 import com.bread.hwang.bread.R;
+import com.bread.hwang.bread.data.Board;
+import com.bread.hwang.bread.data.BoardData;
+import com.bread.hwang.bread.data.Data;
+import com.bread.hwang.bread.data.NetworkResult;
+import com.bread.hwang.bread.manager.NetworkManager;
+import com.bread.hwang.bread.manager.NetworkRequest;
+import com.bread.hwang.bread.request.BoardDetailRequest;
+import com.bread.hwang.bread.request.BoardListSearchRequest;
+import com.bread.hwang.bread.request.BoardWriteRequest;
+import com.bread.hwang.bread.request.UpdateBoardRequest;
 import com.bumptech.glide.Glide;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BoardWriteActivity extends AppCompatActivity {
-  /* 게시물 작성(등록), 수정 API*/
-    /* 게시물 등록API, 게시물 수정API*/
+/* boardNum, */
 
     Toolbar toolbar;
     TextView toolbarTitle;
@@ -44,16 +58,33 @@ public class BoardWriteActivity extends AppCompatActivity {
     Intent intent;
     ImageView imageOne, imageTwo, imageThree, userProfile;
     TextView userName;
+    int boardNum;
+    int realBoardNum;
+    int position;
+
+    private static final String TAG_SEARCH_TYPE = "searchtype";
 
     private static final int RC_GET_ONE_IMAGE = 100;
     private static final int RC_GET_TWO_IMAGE = 200;
     private static final int RC_GET_THREE_IMAGE = 300;
     private static final int RC_PERMISSION = 500;
 
+    private static final int INDEX_TYPE_NONE = 0;
+    private static final int INDEX_TYPE_LIST = 1;
+    private static final int INDEX_TYPE_DETAIL = 2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board_write);
+
+        Toast.makeText(BoardWriteActivity.this, "boardNum" + boardNum, Toast.LENGTH_SHORT).show();
+//        intent = getIntent();
+//        position = intent.getIntExtra("position", 1);
+//        boardNum = intent.getIntExtra("boardNum", 1);
+
+        intent = getIntent();
+        realBoardNum = intent.getIntExtra("boardnum", 0);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbarTitle = (TextView) findViewById(R.id.text_toolbar_title);
@@ -65,14 +96,14 @@ public class BoardWriteActivity extends AppCompatActivity {
         imageTwo = (ImageView) findViewById(R.id.image_two);
         imageThree = (ImageView) findViewById(R.id.image_three);
         userProfile = (ImageView) findViewById(R.id.image_user_profile);
-        editContent = (EditText)findViewById(R.id.edit_content);
+        editContent = (EditText) findViewById(R.id.edit_content);
         userName = (TextView) findViewById(R.id.text_username);
-
 
         if (savedInstanceState != null) {
             String onePath = savedInstanceState.getString("onefile");
             String twoPath = savedInstanceState.getString("twofile");
             String threePath = savedInstanceState.getString("threefile");
+
             if (!TextUtils.isEmpty(onePath)) {
                 uploadOneFile = new File(onePath);
             } else if (!TextUtils.isEmpty(threePath)) {
@@ -80,7 +111,25 @@ public class BoardWriteActivity extends AppCompatActivity {
             } else {
                 uploadThreeFile = new File(threePath);
             }
+        }
 
+        intent = getIntent();
+        int mode = intent.getIntExtra("searchtype", 3);
+
+        if (mode == INDEX_TYPE_LIST) {
+
+            BoardDetailRequest detailRequest = new BoardDetailRequest(BoardWriteActivity.this, realBoardNum);
+            NetworkManager.getInstance().getNetworkData(detailRequest, new NetworkManager.OnResultListener<NetworkResult<BoardData>>() {
+                @Override
+                public void onSuccess(NetworkRequest<NetworkResult<BoardData>> request, NetworkResult<BoardData> result) {
+                    BoardData board = result.getResult();
+                }
+
+                @Override
+                public void onFail(NetworkRequest<NetworkResult<BoardData>> request, int errorCode, String errorMessage, Throwable exception) {
+
+                }
+            });
         }
 
         imageOne.setOnClickListener(new View.OnClickListener() {
@@ -110,11 +159,62 @@ public class BoardWriteActivity extends AppCompatActivity {
             }
         });
 
-
         Button set = (Button) findViewById(R.id.btn_set);
         set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                intent = getIntent();
+                int code = intent.getIntExtra("searchtype", 0);
+
+                setFileList(uploadOneFile, uploadTwoFile, uploadThreeFile);
+
+                switch (code) {
+                    case INDEX_TYPE_NONE:
+                    default:
+                        Toast.makeText(BoardWriteActivity.this, "잘못된 접근입니다.", Toast.LENGTH_SHORT).show();
+                        finish();
+                        return;
+
+                   // case INDEX_TYPE_LIST:
+//                        BoardWriteRequest writeRequest = new BoardWriteRequest(BoardWriteActivity.this, editContent.getText().toString(), files);
+//                        NetworkManager.getInstance().getNetworkData(writeRequest, new NetworkManager.OnResultListener<NetworkResult<Data>>() {
+//                            @Override
+//                            public void onSuccess(NetworkRequest<NetworkResult<Data>> request, NetworkResult<Data> result) {
+//                                if (result.getCode() == 0) {
+//                                    Data data = result.getResult();
+//                                    finish();
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onFail(NetworkRequest<NetworkResult<Data>> request, int errorCode, String errorMessage, Throwable exception) {
+//
+//                            }
+//                        });
+                        //return;
+
+                    case INDEX_TYPE_DETAIL:
+                        UpdateBoardRequest updateRequest = new UpdateBoardRequest(BoardWriteActivity.this, realBoardNum, editContent.getText().toString());
+                        NetworkManager.getInstance().getNetworkData(updateRequest, new NetworkManager.OnResultListener<NetworkResult<Data>>() {
+                            @Override
+                            public void onSuccess(NetworkRequest<NetworkResult<Data>> request, NetworkResult<Data> result) {
+                                Data data = result.getResult();
+                                finish();
+                            }
+
+                            @Override
+                            public void onFail(NetworkRequest<NetworkResult<Data>> request, int errorCode, String errorMessage, Throwable exception) {
+
+                            }
+                        });
+                }
+
+                intent = new Intent();
+                intent.putExtra("num", boardNum);
+                intent.putExtra("boardtab", 2);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                setResult(Activity.RESULT_OK, intent);
+
                 finish();
             }
         });
@@ -130,8 +230,19 @@ public class BoardWriteActivity extends AppCompatActivity {
         checkPermission();
     }
 
+    public void setFileList(File oneFile, File twoFile, File threeFile) {
+        if (uploadOneFile != null) {
+            files.add(oneFile);
+        } else if (uploadTwoFile != null) {
+            files.add(twoFile);
+        } else {
+            files.add(threeFile);
+        }
+    }
 
     File uploadOneFile, uploadTwoFile, uploadThreeFile = null;
+    List<File> files = new ArrayList<>();
+    List<Integer> delFiles = new ArrayList<>();
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

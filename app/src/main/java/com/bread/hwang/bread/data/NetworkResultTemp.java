@@ -6,6 +6,7 @@ package com.bread.hwang.bread.data;
 
 public class NetworkResultTemp {
     private int code;
+    private String message;
 
     public int getCode() {
         return code;

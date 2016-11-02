@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -27,22 +28,25 @@ import android.widget.Toast;
 import com.bread.hwang.bread.MyApplication;
 import com.bread.hwang.bread.R;
 import com.bread.hwang.bread.adapter.BoardDetailReplyAdapter;
+import com.bread.hwang.bread.data.Board;
+import com.bread.hwang.bread.data.BoardData;
+import com.bread.hwang.bread.data.NetworkResult;
 import com.bread.hwang.bread.data.Reply;
 import com.bread.hwang.bread.data.User;
+import com.bread.hwang.bread.manager.NetworkManager;
+import com.bread.hwang.bread.manager.NetworkRequest;
 import com.bread.hwang.bread.manager.PropertyManager;
+import com.bread.hwang.bread.request.BoardDetailRequest;
 import com.bread.hwang.bread.view.BoardDetailReplyViewHolder;
 
+import java.io.BufferedOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class BoardDetailActivity extends AppCompatActivity {
- /* 게시글 상세페이지 */
-    /* 게시글 상세조회API, 게시물 삭제API, 파일삭제API */
-
-    /* 게시물 상세페이지에서 댓글버튼 누르면 뜨는 댓글창 */
-    /* 댓글 등록API, 댓글 목록API, 댓글 수정API, 댓글 삭제API*/
+ /*boardNum */
 
     Intent intent;
     ListView listView;
@@ -51,30 +55,40 @@ public class BoardDetailActivity extends AppCompatActivity {
     ImageButton replyUpdate, replyDelete;
     AlertDialog dialog;
     Toolbar toolbar;
-    TextView toolbarTitle;
-
+    TextView toolbarTitle, userName, dateText;
+    ImageView profileImage;
     int position;
+    int boardNum;
+    int realBoardNum;
     String tempReply;
 
     private static final String TAG_REPLY_UPDATE = "replyupdate";
+    private static final String TAG_SEARCH_TYPE = "searchtype";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board_detail);
+
+        intent = getIntent();
+        realBoardNum = intent.getIntExtra("boardnum", 1);
+
+        Toast.makeText(BoardDetailActivity.this, "boardnum" + realBoardNum, Toast.LENGTH_SHORT).show();
+
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         toolbarTitle = (TextView)findViewById(R.id.text_toolbar_title);
         toolbarTitle.setText("게시물 상세 화면");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-//        Bundle bundle = new Bundle();
-//        bundle.getBundle("replydata");
-//        Toast.makeText(BoardDetailActivity.this, "replydata" + replyDelete, Toast.LENGTH_SHORT).show();
+        userName = (TextView)findViewById(R.id.text_reply_username);
+        dateText = (TextView)findViewById(R.id.text_date);
+        profileImage = (ImageView)findViewById(R.id.image_profile);
 
         View replyList = getLayoutInflater().inflate(R.layout.view_detail_reply, null);
         replyUpdate = (ImageButton) replyList.findViewById(R.id.btn_reply_update);
         replyDelete = (ImageButton) replyList.findViewById(R.id.btn_reply_delete);
+
         /* 나중에 View. GONE으로 수정 */
         replyUpdate.setVisibility(View.VISIBLE);
         replyDelete.setVisibility(View.VISIBLE);
@@ -84,12 +98,13 @@ public class BoardDetailActivity extends AppCompatActivity {
         mAdapter = new BoardDetailReplyAdapter();
         listView.setAdapter(mAdapter);
 
+        replyEdit = (EditText) findViewById(R.id.edit_comment);
+
         mAdapter.setOnAdapterBoardReplyDeleteClickListener(new BoardDetailReplyAdapter.OnAdapterBoardReplyDeleteClickListener() {
             @Override
             public void onAdapterBoardReplyDeleteClick(BoardDetailReplyAdapter adapter, BoardDetailReplyViewHolder view, Reply reply) {
                 position = (Integer) view.getTag();
                 getReplyDeleteList(position, reply);
-
             }
         });
 
@@ -101,9 +116,21 @@ public class BoardDetailActivity extends AppCompatActivity {
             }
         });
 
+        BoardDetailRequest detailRequest = new BoardDetailRequest(BoardDetailActivity.this, boardNum);
+        NetworkManager.getInstance().getNetworkData(detailRequest, new NetworkManager.OnResultListener<NetworkResult<BoardData>>() {
+            @Override
+            public void onSuccess(NetworkRequest<NetworkResult<BoardData>> request, NetworkResult<BoardData> result) {
+                BoardData board = result.getResult();
 
-        replyEdit = (EditText) findViewById(R.id.edit_comment);
+                userName.setText(board.getData().getUserNumber().getNickname());
+                dateText.setText(board.getData().getRegDate());
+            }
 
+            @Override
+            public void onFail(NetworkRequest<NetworkResult<BoardData>> request, int errorCode, String errorMessage, Throwable exception) {
+
+            }
+        });
         Button replyButton = (Button) findViewById(R.id.btn_set);
         replyButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,19 +152,7 @@ public class BoardDetailActivity extends AppCompatActivity {
         });
 
         mAdapter.clear();
-        initData();
-    }
 
-    private void initData() {
-        for (int i = 0; i < 20; i++) {
-            Reply reply = new Reply();
-            User user = new User();
-            reply.setContent(i + "bread!!");
-            reply.setRegDate("" + i);
-            user.setNickname(i + "Writer");
-            reply.setUserNumber(user);
-            mAdapter.add(reply);
-        }
     }
 
     MenuItem updateMenuItem;
@@ -160,8 +175,11 @@ public class BoardDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.board_update) {
             intent = new Intent(BoardDetailActivity.this, BoardWriteActivity.class);
+            intent.putExtra(TAG_SEARCH_TYPE,2);
             startActivity(intent);
+
         } else if (item.getItemId() == R.id.board_delete) {
+
             /* 게시물 삭제 */
             Toast.makeText(BoardDetailActivity.this, "삭제합니다", Toast.LENGTH_SHORT).show();
         }
@@ -197,6 +215,7 @@ public class BoardDetailActivity extends AppCompatActivity {
         FragmentManager fm = getSupportFragmentManager();
         ReplyUpdateFragment dialog = new ReplyUpdateFragment();
         Bundle bundle = new Bundle();
+        bundle.putInt("boardnum", boardNum);
         bundle.putInt("position", position);
         dialog.setArguments(bundle);
         dialog.show(fm, "commentdialog");

@@ -21,7 +21,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bread.hwang.bread.data.Data;
+import com.bread.hwang.bread.data.NetworkResult;
+import com.bread.hwang.bread.manager.NetworkManager;
+import com.bread.hwang.bread.manager.NetworkRequest;
 import com.bread.hwang.bread.manager.PropertyManager;
+import com.bread.hwang.bread.request.LoginRequest;
 
 import static com.bread.hwang.bread.MyApplication.context;
 
@@ -33,9 +38,11 @@ public class LoginActivity extends AppCompatActivity {
     TextView toolbarTitle;
     Intent intent;
     EditText idText, passwordText;
-    String password;
     SharedPreferences mPrefs;
     SharedPreferences.Editor mEditor;
+
+    String userId;
+    String userPass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,17 +57,13 @@ public class LoginActivity extends AppCompatActivity {
         idText = (EditText) findViewById(R.id.edit_id);
         passwordText = (EditText) findViewById(R.id.edit_password);
 
-        password = passwordText.getText().toString();
-
         Button login = (Button) findViewById(R.id.btn_login);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                String userId = idText.getText().toString();
-                PropertyManager.getInstance().setUserId(userId);
-                String userPass = passwordText.getText().toString();
-                PropertyManager.getInstance().setUserPassword(userPass);
+                userId = idText.getText().toString();
+                userPass = passwordText.getText().toString();
 
                 if (userPass.toString().length() < 6) {
                     Toast.makeText(LoginActivity.this, "You have to write to here more!", Toast.LENGTH_SHORT).show();
@@ -75,6 +78,24 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
 
+                LoginRequest loginRequest = new LoginRequest(LoginActivity.this, userId, userPass);
+                NetworkManager.getInstance().getNetworkData(loginRequest, new NetworkManager.OnResultListener<NetworkResult<Data>>() {
+                    @Override
+                    public void onSuccess(NetworkRequest<NetworkResult<Data>> request, NetworkResult<Data> result) {
+                        if(result.getCode() == 0) {
+                            Data data = result.getResult();
+
+                            PropertyManager.getInstance().setUserId(userId);
+                            PropertyManager.getInstance().setUserPassword(userPass);
+
+                        }
+                    }
+
+                    @Override
+                    public void onFail(NetworkRequest<NetworkResult<Data>> request, int errorCode, String errorMessage, Throwable exception) {
+
+                    }
+                });
             }
         });
         mPrefs = PreferenceManager.getDefaultSharedPreferences(context);

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.bread.hwang.bread.data.Board;
 import com.bread.hwang.bread.data.File;
+import com.bread.hwang.bread.data.FileData;
 import com.bread.hwang.bread.data.NetworkResult;
 import com.google.gson.reflect.TypeToken;
 
@@ -16,7 +17,7 @@ import okhttp3.Request;
  * Created by Hwang on 2016-10-31.
  */
 
-public class FileListRequest extends AbstractRequest<NetworkResult<File>> {
+public class FileListRequest extends AbstractRequest<NetworkResult<FileData>> {
     Request mRequest;
 
     public FileListRequest(Context context, int boardNum) {

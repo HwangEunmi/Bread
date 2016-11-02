@@ -21,15 +21,18 @@ import com.bread.hwang.bread.R;
 import com.bread.hwang.bread.adapter.BoardSearchAdapter;
 import com.bread.hwang.bread.adapter.BoardSearchSpinnerAdapter;
 import com.bread.hwang.bread.data.Board;
+import com.bread.hwang.bread.data.BoardData;
+import com.bread.hwang.bread.data.NetworkResult;
 import com.bread.hwang.bread.data.User;
+import com.bread.hwang.bread.manager.NetworkManager;
+import com.bread.hwang.bread.manager.NetworkRequest;
+import com.bread.hwang.bread.request.BoardListSearchRequest;
 import com.bread.hwang.bread.util.DateCalculator;
 import com.bread.hwang.bread.view.BoardSearchViewHolder;
 
+import java.util.List;
+
 public class BoardSearchActivity extends AppCompatActivity {
-    /* 게시글 검색하는 액티비티(조건에 따라서) */
-    /*게시글 목록(+검색API)  */
-    /* Spinner의 구성이 작성자, 날짜인데 키워드가 있을경우 작성자검색/ 없으면 날짜순
-    (BeautyTipFragment쪽 참고) 게시물 검색해오기 (일단 페이징 처리 ㄴㄴ, 한번에 뿌리기)*/
 
     Toolbar toolbar;
     TextView toolbarTitle;
@@ -40,16 +43,37 @@ public class BoardSearchActivity extends AppCompatActivity {
     BoardSearchSpinnerAdapter spinnerAdapter;
     SearchView searchView;
 
+    String searchType, keyWord, lastBoardNum;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board_search);
 
-        toolbar = (Toolbar)findViewById(R.id.toolbar);
-        toolbarTitle = (TextView)findViewById(R.id.text_toolbar_title);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbarTitle = (TextView) findViewById(R.id.text_toolbar_title);
         toolbarTitle.setText("게시물 찾기 화면");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        spinner = (Spinner) findViewById(R.id.spinner);
+        spinnerAdapter = new BoardSearchSpinnerAdapter();
+        spinner.setAdapter(spinnerAdapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+              /* 나중에 지우기 */
+                if (spinner.getSelectedItemPosition() == 0)
+                    searchType = "name";
+                else
+                    searchType = "date";
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
 
         listView = (ListView) findViewById(R.id.listView);
         mAdapter = new BoardSearchAdapter();
@@ -68,9 +92,33 @@ public class BoardSearchActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                mAdapter.clear();
-                initData();
+                // initData();
+
                 setSearchResult();
+                lastBoardNum = "lastBoardNum";
+
+                if (spinner.getSelectedItemPosition() == 0)
+                    searchType = "name";
+                else
+                    searchType = "date";
+
+                BoardListSearchRequest searchRequest = new BoardListSearchRequest(BoardSearchActivity.this, 10, lastBoardNum, searchType, keyWord);
+                NetworkManager.getInstance().getNetworkData(searchRequest, new NetworkManager.OnResultListener<NetworkResult<List<BoardData>>>() {
+                    @Override
+                    public void onSuccess(NetworkRequest<NetworkResult<List<BoardData>>> request, NetworkResult<List<BoardData>> result) {
+                        List<BoardData> boards = result.getResult();
+                        Toast.makeText(BoardSearchActivity.this, "keyWord: " + keyWord, Toast.LENGTH_SHORT).show();
+
+                        mAdapter.clear();
+                        mAdapter.addAll(boards);
+                    }
+
+                    @Override
+                    public void onFail(NetworkRequest<NetworkResult<List<BoardData>>> request, int errorCode, String errorMessage, Throwable exception) {
+
+                    }
+                });
+
                 return false;
             }
 
@@ -78,24 +126,6 @@ public class BoardSearchActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String newText) {
                 mAdapter.clear();
                 return false;
-            }
-        });
-
-        spinner = (Spinner) findViewById(R.id.spinner);
-        spinnerAdapter = new BoardSearchSpinnerAdapter();
-        spinner.setAdapter(spinnerAdapter);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0)
-                    Toast.makeText(BoardSearchActivity.this, "작성자", Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(BoardSearchActivity.this, "날짜", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
             }
         });
 
@@ -108,21 +138,21 @@ public class BoardSearchActivity extends AppCompatActivity {
     public void setSearchResult() {
         DateCalculator dateCalculator = new DateCalculator();
 
-        String searchResult = ""+ searchView.getQuery();
+        keyWord = "" + searchView.getQuery();
     }
 
-    private void initData() {
-        for (int i = 0; i < 20; i++) {
-            Board board = new Board();
-            User user = new User();
-
-            user.setNickname("빵순이");
-            board.setUserNumber(user);
-            board.setContent(i + "빵이 좋아요");
-            board.setRegDate(i + "");
-            mAdapter.add(board);
-        }
-    }
+//    private void initData() {
+//        for (int i = 0; i < 20; i++) {
+//            Board board = new Board();
+//            User user = new User();
+//
+//            user.setNickname("빵순이");
+//            board.setUserNumber(user);
+//            board.setContent(i + "빵이 좋아요");
+//            board.setRegDate(i + "");
+//            mAdapter.add(board);
+//        }
+//    }
 
     private void initSpinner() {
         String[] arrays = getResources().getStringArray(R.array.search);
@@ -143,7 +173,7 @@ public class BoardSearchActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.menu_cancel) {
+        if (item.getItemId() == R.id.menu_cancel) {
             finish();
         }
         return super.onOptionsItemSelected(item);

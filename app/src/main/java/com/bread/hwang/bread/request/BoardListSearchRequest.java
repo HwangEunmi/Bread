@@ -3,6 +3,7 @@ package com.bread.hwang.bread.request;
 import android.content.Context;
 
 import com.bread.hwang.bread.data.Board;
+import com.bread.hwang.bread.data.BoardData;
 import com.bread.hwang.bread.data.NetworkResult;
 import com.google.gson.reflect.TypeToken;
 
@@ -16,13 +17,14 @@ import okhttp3.Request;
  * Created by Hwang on 2016-10-31.
  */
 
-public class BoardListSearchRequest extends AbstractRequest<NetworkResult<List<Board>>> {
+public class BoardListSearchRequest extends AbstractRequest<NetworkResult<List<BoardData>>> {
     Request mRequest;
 
-    public BoardListSearchRequest(Context context, int pageNum) {
+    public BoardListSearchRequest(Context context, int pageNum, String lastBoardNum) {
         HttpUrl url = getBaseUrlBuilder()
                 .addPathSegment("boards")
-                .addPathSegment(pageNum + "")
+                .addQueryParameter("pagenum", pageNum+"")
+                .addQueryParameter("lastboardnum", lastBoardNum)
                 .build();
 
         mRequest = new Request.Builder()
@@ -32,24 +34,11 @@ public class BoardListSearchRequest extends AbstractRequest<NetworkResult<List<B
 
     }
 
-
-    public BoardListSearchRequest(Context context, String lastBoardNum) {
+    public BoardListSearchRequest(Context context, int pageNum, String lastBoardNum, String searchType, String keyWord) {
         HttpUrl url = getBaseUrlBuilder()
                 .addPathSegment("boards")
-                .addPathSegment(lastBoardNum)
-                .build();
-
-        mRequest = new Request.Builder()
-                .url(url)
-                .tag(context)
-                .build();
-    }
-
-
-    public BoardListSearchRequest(Context context, int pageNum, String searchType, String keyWord) {
-        HttpUrl url = getBaseUrlBuilder()
-                .addPathSegment("boards")
-                .addPathSegment(pageNum + "")
+                .addQueryParameter("pagenum", pageNum+"")
+                .addQueryParameter("lastboardnum", lastBoardNum)
                 .addQueryParameter("searchType", searchType)
                 .addQueryParameter("keyWord", keyWord)
                 .build();
@@ -59,22 +48,6 @@ public class BoardListSearchRequest extends AbstractRequest<NetworkResult<List<B
                 .tag(context)
                 .build();
     }
-
-
-    public BoardListSearchRequest(Context context, String lastBoardNum, String searchType, String keyWord) {
-        HttpUrl url = getBaseUrlBuilder()
-                .addPathSegment("boards")
-                .addPathSegment(lastBoardNum)
-                .addQueryParameter("searchType", searchType)
-                .addQueryParameter("keyWord", keyWord)
-                .build();
-
-        mRequest = new Request.Builder()
-                .url(url)
-                .tag(context)
-                .build();
-    }
-
 
     @Override
     protected Type getType() {

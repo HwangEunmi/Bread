@@ -12,7 +12,9 @@ import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 
 import java.io.File;
+import java.net.MalformedURLException;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -47,10 +49,13 @@ public class NetworkManager {
 
         builder.cookieJar(cookieJar);
         builder.followRedirects(true);
-
+        builder.addInterceptor(new RedirectInterceptor());
 
         File cacheDir = new File(context.getCacheDir(), "network");
-        if (!cacheDir.exists()) cacheDir.mkdir();
+
+        if (!cacheDir.exists()) {
+            cacheDir.mkdir();
+        }
         Cache cache = new Cache(cacheDir, 10 * 1024 * 1024);
         builder.cache(cache);
 
@@ -61,6 +66,9 @@ public class NetworkManager {
         client = builder.build();
     }
 
+    public Map<String, String> getCookieHeader(String url) throws MalformedURLException {
+        Map<String, String>
+    }
     public OkHttpClient getClient() {
         return client;
     }
@@ -126,8 +134,6 @@ public class NetworkManager {
             }
         }
     }
-
-
 }
 
 

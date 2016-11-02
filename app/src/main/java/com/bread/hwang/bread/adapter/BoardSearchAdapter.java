@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.bread.hwang.bread.data.Board;
+import com.bread.hwang.bread.data.BoardData;
 import com.bread.hwang.bread.view.BoardSearchViewHolder;
 
 import java.util.ArrayList;
@@ -15,14 +16,14 @@ import java.util.List;
  */
 
 public class BoardSearchAdapter extends BaseAdapter implements BoardSearchViewHolder.OnContentClickListener {
-    List<Board> items = new ArrayList<>();
+    List<BoardData> items = new ArrayList<>();
 
-    public void add(Board board) {
+    public void add(BoardData board) {
         items.add(board);
         notifyDataSetChanged();
     }
 
-    public void addAll(List<Board> items) {
+    public void addAll(List<BoardData> items) {
         this.items.addAll(items);
         notifyDataSetChanged();
     }
@@ -57,7 +58,7 @@ public class BoardSearchAdapter extends BaseAdapter implements BoardSearchViewHo
             view = (BoardSearchViewHolder) convertView;
         }
 
-        view.setBoardSearch(items.get(position));
+        view.setBoardSearch(items.get(position).getData());
 
         return view;
     }

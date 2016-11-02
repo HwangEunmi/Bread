@@ -2,6 +2,7 @@ package com.bread.hwang.bread;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     FragmentTabHost tabHost;
     Toolbar toolbar;
     TextView toolbarTitle;
+    int boardNum;
 
     public final static String TAG_TAB_BOARD = "board";
     public final static String TAG_TAB_MYPAGE = "mypage";
@@ -53,6 +55,13 @@ public class MainActivity extends AppCompatActivity {
         tabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
         tabHost.addTab(tabHost.newTabSpec(TAG_TAB_BOARD).setIndicator(boardIndicator), BoardListFragment.class, null);
         tabHost.addTab(tabHost.newTabSpec(TAG_TAB_MYPAGE).setIndicator(myPageIndicator), MyPageFragment.class, null);
+
+        Intent intent = getIntent();
+        boardNum = intent.getIntExtra("num", 1);
+    }
+
+    public int getBoardNum() {
+        return boardNum;
     }
 
     @Override
@@ -69,5 +78,10 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 }

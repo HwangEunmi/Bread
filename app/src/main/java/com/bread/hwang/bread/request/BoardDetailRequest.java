@@ -3,6 +3,7 @@ package com.bread.hwang.bread.request;
 import android.content.Context;
 
 import com.bread.hwang.bread.data.Board;
+import com.bread.hwang.bread.data.BoardData;
 import com.bread.hwang.bread.data.NetworkResult;
 import com.bread.hwang.bread.manager.NetworkRequest;
 import com.google.gson.reflect.TypeToken;
@@ -22,7 +23,7 @@ import okhttp3.RequestBody;
  * Created by Hwang on 2016-10-31.
  */
 
-public class BoardDetailRequest extends AbstractRequest<NetworkResult<Board>> {
+public class BoardDetailRequest extends AbstractRequest<NetworkResult<BoardData>> {
     Request mRequest;
 
     public BoardDetailRequest(Context context, int boardNum) {

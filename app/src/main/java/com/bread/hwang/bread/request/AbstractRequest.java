@@ -21,7 +21,8 @@ public abstract class AbstractRequest<T> extends NetworkRequest<T> {
     protected HttpUrl.Builder getBaseUrlBuilder() {
         HttpUrl.Builder builder = new HttpUrl.Builder();
         builder.scheme("http");
-        // builder.host();
+        builder.host("192.168.6.62");
+        builder.port(8080);
         return builder;
     }
 

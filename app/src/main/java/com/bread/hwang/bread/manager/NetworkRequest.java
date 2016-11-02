@@ -19,7 +19,6 @@ import okhttp3.ResponseBody;
  */
 
 public abstract class NetworkRequest<T> implements Callback {
-    /* NetworkManager에서 OkHTTP안쓰고 ThreadPool이랑 Executor쓰면 Runnable을 implements해야 함 */
 
     T result;
     int errorCode;
@@ -32,9 +31,7 @@ public abstract class NetworkRequest<T> implements Callback {
     }
 
     public abstract Request getRequest();
-
     protected abstract T parse(ResponseBody body) throws IOException;
-
     Call call;
 
     void process(OkHttpClient client) {
@@ -46,30 +43,6 @@ public abstract class NetworkRequest<T> implements Callback {
     @Override
     public void onFailure(Call call, IOException e) {
         sendError(-1, e.getMessage(), e);
-    }
-
-    protected void sendError(int errorCode, String errorMessage, Throwable exception) {
-        this.errorCode = errorCode;
-        this.errorMessage = errorMessage;
-        this.exception = exception;
-        NetworkManager.getInstance().sendFail(this);
-    }
-
-    void sendFail() {
-        if (listener != null) {
-            listener.onFail(this, errorCode, errorMessage, exception);
-        }
-    }
-
-    private void sendSuccess(T result) {
-        this.result = result;
-        NetworkManager.getInstance().sendSuccess(this);
-    }
-
-    void sendSuccess() {
-        if (listener != null) {
-            listener.onSuccess(this, result);
-        }
     }
 
     @Override
@@ -96,5 +69,28 @@ public abstract class NetworkRequest<T> implements Callback {
         return call.isCanceled();
     }
 
+    private void sendSuccess(T result) {
+        this.result = result;
+        NetworkManager.getInstance().sendSuccess(this);
+    }
+
+    void sendSuccess() {
+        if (listener != null) {
+            listener.onSuccess(this, result);
+        }
+    }
+
+    protected void sendError(int errorCode, String errorMessage, Throwable exception) {
+        this.errorCode = errorCode;
+        this.errorMessage = errorMessage;
+        this.exception = exception;
+        NetworkManager.getInstance().sendFail(this);
+    }
+
+    void sendFail() {
+        if (listener != null) {
+            listener.onFail(this, errorCode, errorMessage, exception);
+        }
+    }
 
 }
